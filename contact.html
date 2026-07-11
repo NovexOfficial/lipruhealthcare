@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Lipru Healthcare</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Core Neumorphic Variables */
+        :root {
+            --bg-color: #e0e5ec;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --primary: #0056b3;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --shadow-dark: #b8bcc2;
+            --shadow-light: #ffffff;
+            --glass-bg: rgba(224, 229, 236, 0.85);
+        }
+
+        /* Base & Reset */
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; position: relative; }
+        
+        /* 3D Particle Background */
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        /* Neumorphic Utilities */
+        .neu-flat { background: var(--bg-color); box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); border-radius: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .neu-flat:hover { transform: translateY(-5px); box-shadow: 12px 12px 20px var(--shadow-dark), -12px -12px 20px var(--shadow-light); }
+        .neu-pressed { background: var(--bg-color); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); border-radius: 20px; }
+        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; font-size: 16px; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .btn-primary:active { box-shadow: inset 4px 4px 8px #004085, inset -4px -4px 8px #007bff; transform: translateY(2px); }
+        .btn-outline { background: transparent; color: var(--primary); box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER & NAVIGATION --- */
+        header { position: sticky; top: 0; z-index: 1000; padding: 15px 0; transition: all 0.3s ease; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links > a, .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .nav-links > a:hover, .nav-links > a.active, .dropdown:hover > a { color: var(--primary); }
+
+        .dropdown { position: relative; display: inline-block; padding: 10px 0; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
+        .dropdown:hover .dropdown-content { display: block; animation: slideUp 0.3s ease; }
+        .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
+        .dropdown-content a:hover { background-color: var(--primary); color: white; padding-left: 25px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Menu */
+        .hamburger { display: none; font-size: 24px; color: var(--primary); cursor: pointer; padding: 5px; }
+        .mobile-menu { display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; }
+        .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
+        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; }
+        .mobile-menu a:hover { background: var(--primary); color: white; }
+        .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
+        .mobile-submenu.active { display: flex; }
+        .mobile-submenu a { font-size: 14px; font-weight: 500; padding: 8px; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PAGE SPECIFIC STYLES --- */
+        .page-header { padding: 80px 0 40px; text-align: center; }
+        .page-header h1 { font-size: 48px; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+        .page-header p { font-size: 18px; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+        section { padding: 40px 0 80px; }
+        
+        /* Contact Layout */
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        
+        /* Contact Info Cards */
+        .info-card { display: flex; align-items: flex-start; gap: 20px; padding: 25px; margin-bottom: 25px; border-radius: 20px; }
+        .info-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: var(--primary); flex-shrink: 0; }
+        .info-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+        .info-content p, .info-content a { color: var(--text-muted); font-size: 15px; text-decoration: none; line-height: 1.6; }
+        .info-content a:hover { color: var(--primary); text-decoration: underline; }
+
+        /* Social Media Buttons */
+        .social-title { font-size: 20px; font-weight: 700; margin: 30px 0 20px; color: var(--text-main); }
+        .social-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+        .social-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: var(--text-muted); text-decoration: none; transition: all 0.3s ease; }
+        /* Brand Colors on Hover */
+        .social-btn.fb:hover { color: #1877F2; }
+        .social-btn.ig:hover { color: #E4405F; }
+        .social-btn.yt:hover { color: #FF0000; }
+        .social-btn.tw:hover { color: #000000; }
+        .social-btn.wa:hover { color: #25D366; }
+
+        /* Contact Form */
+        .contact-form { padding: 40px; border-radius: 30px; }
+        .contact-form h2 { font-size: 28px; font-weight: 800; margin-bottom: 30px; color: var(--primary); }
+        .input-group { margin-bottom: 20px; border-radius: 15px; overflow: hidden; display: flex; align-items: center; }
+        .input-icon { padding: 15px 0 15px 20px; color: var(--text-muted); }
+        .input-group input, .input-group textarea { width: 100%; padding: 15px; border: none; background: transparent; outline: none; font-size: 15px; color: var(--text-main); font-family: 'Poppins', sans-serif; }
+        .input-group textarea { resize: vertical; min-height: 120px; }
+
+        /* Map Section */
+        .map-section { margin-top: 60px; padding: 40px; border-radius: 30px; text-align: center; }
+        .map-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 20px; color: var(--primary); }
+        .map-container { width: 100%; height: 350px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; }
+
+        /* Footer */
+        footer { background: var(--text-main); color: white; padding: 60px 0 20px; border-top-left-radius: 30px; border-top-right-radius: 30px; margin-top: 40px; }
+        .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .contact-wrapper { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 36px; }
+            .contact-form { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Particle Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- HEADER WITH DROPDOWN & HAMBURGER -->
+    <header class="glass-panel" style="margin: 10px 20px; border-radius: 20px;">
+        <div class="container nav-wrapper">
+            <a href="index.html" class="logo"><i class="fa-solid fa-heart-pulse"></i> Lipru</a>
+            
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <div class="dropdown">
+                    <a href="services.html">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
+                    <div class="dropdown-content">
+                        <a href="services.html#blood-tests"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
+                        <a href="services.html#health-profiles"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
+                        <a href="services.html#imaging"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
+                        <a href="services.html#nutrition"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
+                        <a href="services.html#store"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
+                    </div>
+                </div>
+                <a href="packages.html">Packages</a>
+                <a href="contact.html" class="active">Contact</a>
+                <a href="booking.html" class="btn btn-outline" style="padding: 8px 20px; margin-left: 10px;">Book Now</a>
+            </nav>
+
+            <div class="hamburger" id="hamburger-icon" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="mobile-menu neu-pressed" id="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu()">
+                    Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                </div>
+                <div class="mobile-submenu" id="mobile-submenu">
+                    <a href="services.html#blood-tests">Blood Tests</a>
+                    <a href="services.html#health-profiles">Health Profiles</a>
+                    <a href="services.html#imaging">Imaging</a>
+                    <a href="services.html#nutrition">Nutrition</a>
+                    <a href="services.html#store">Healthcare Store</a>
+                </div>
+                <a href="packages.html">Packages</a>
+                <a href="contact.html">Contact</a>
+                <a href="booking.html" class="btn btn-primary" style="margin-top: 10px;">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <div class="container page-header reveal">
+        <h1>Get In Touch</h1>
+        <p>We're here to help! Whether you have a question about our health packages or need assistance with a booking, reach out to us.</p>
+    </div>
+
+    <!-- CONTACT SECTION -->
+    <section class="container">
+        <div class="contact-wrapper">
+            
+            <!-- LEFT: Contact Information -->
+            <div class="reveal">
+                
+                <div class="info-card neu-flat">
+                    <div class="info-icon neu-pressed"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-content">
+                        <h3>Head Office</h3>
+                        <p>Vrindavan Complex, 501, Jivdani Cross Road, near Auto Stand, Sahakar Nagar, Virar East, Palghar, Virar, Maharashtra 401305</p>
+                    </div>
+                </div>
+
+                <div class="info-card neu-flat">
+                    <div class="info-icon neu-pressed"><i class="fa-solid fa-phone-volume"></i></div>
+                    <div class="info-content">
+                        <h3>Phone & WhatsApp</h3>
+                        <p>Support: <a href="tel:+918149335679" style="font-weight: 600;">+91 8149335679</a></p>
+                        <p>WhatsApp: <a href="https://wa.me/918149335679?" target="_blank" style="color: #25D366; font-weight: 600;">Chat with us</a></p>
+                    </div>
+                </div>
+
+                <div class="info-card neu-flat">
+                    <div class="info-icon neu-pressed"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <div class="info-content">
+                        <h3>Email Address</h3>
+                        <p>General Enquiries:</p>
+                        <a href="mailto:ipruhealthcare@gmail.com" style="font-weight: 600;">ipruhealthcare@gmail.com</a>
+                    </div>
+                </div>
+
+                <!-- Social Media Grid -->
+                <h3 class="social-title">Follow Our Journey</h3>
+                <div class="social-grid">
+                    <a href="https://www.facebook.com/Lipruhealthcare/" target="_blank" class="social-btn neu-flat fb" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/lipru_healthcare/" target="_blank" class="social-btn neu-flat ig" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@lipruhealthcare" target="_blank" class="social-btn neu-flat yt" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://x.com/Lipruhealthcare" target="_blank" class="social-btn neu-flat tw" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://wa.me/918149335679?" target="_blank" class="social-btn neu-flat wa" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: Contact Form -->
+            <div class="reveal" style="transition-delay: 100ms;">
+                <div class="contact-form neu-flat">
+                    <h2>Send Us a Message</h2>
+                    <form onsubmit="event.preventDefault(); alert('Message Sent Successfully! We will contact you soon.');">
+                        
+                        <div class="input-group neu-pressed">
+                            <div class="input-icon"><i class="fa-solid fa-user"></i></div>
+                            <input type="text" placeholder="Your Full Name" required>
+                        </div>
+
+                        <div class="input-group neu-pressed">
+                            <div class="input-icon"><i class="fa-solid fa-phone"></i></div>
+                            <input type="tel" placeholder="Mobile Number" required>
+                        </div>
+
+                        <div class="input-group neu-pressed">
+                            <div class="input-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <input type="email" placeholder="Email Address">
+                        </div>
+
+                        <div class="input-group neu-pressed">
+                            <div class="input-icon" style="align-self: flex-start; padding-top: 15px;"><i class="fa-solid fa-comment-dots"></i></div>
+                            <textarea placeholder="How can we help you? (Write your query here...)" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 18px; margin-top: 10px;">
+                            <i class="fa-regular fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GOOGLE MAP SECTION -->
+    <section class="container reveal">
+        <div class="map-section neu-flat">
+            <h2>Find Us Here</h2>
+            <!-- Google Maps iFrame showing Virar area as a visual reference -->
+            <div class="map-container neu-pressed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15053.483980064786!2d72.8055627!3d19.4527131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a90f1d0b04a1%3A0x8e83348123284065!2sVirar%20East%2C%20Virar%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <!-- Exact Link provided by user -->
+            <a href="https://maps.app.goo.gl/NRptYVpwuMvawjaX9" target="_blank" class="btn btn-outline" style="font-size: 18px; padding: 12px 30px;">
+                <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 style="color: #63b3ed; font-size: 24px; margin-bottom: 15px;"><i class="fa-solid fa-heart-pulse"></i> Lipru Healthcare</h3>
+                    <p style="color: #a0aec0; max-width: 300px;">Smart Health, Saved Wealth. Reliable home blood tests across India.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px;">Explore</h4>
+                    <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
+                    <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
+                    <p><a href="services.html" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
+                    <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px;">Contact Info</h4>
+                    <p style="color: #a0aec0;"><i class="fa-solid fa-phone"></i> +91 8149335679</p>
+                    <p style="color: #a0aec0;"><i class="fa-solid fa-envelope"></i> ipruhealthcare@gmail.com</p>
+                    <a href="booking.html" class="btn btn-primary" style="margin-top: 15px; padding: 8px 15px; font-size: 14px;">Book Appointment Now</a>
+                </div>
+            </div>
+            <div style="text-align: center; color: #718096; border-top: 1px solid #4a5568; padding-top: 20px;">
+                Copyright © 2026 Lipru Healthcare. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/918149335679?" style="position: fixed; bottom: 30px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1000; text-decoration: none;" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.querySelector('#hamburger-icon i');
+            menu.classList.toggle('active');
+            if(menu.classList.contains('active')) {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+                document.getElementById('mobile-submenu').classList.remove('active');
+            }
+        }
+
+        function toggleMobileSubmenu() {
+            document.getElementById('mobile-submenu').classList.toggle('active');
+        }
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if(this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if(this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 86, 179, 0.15)'; 
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        function init() { for(let i=0; i<60; i++){ particlesArray.push(new Particle()); } }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i=0; i<particlesArray.length; i++){
+                particlesArray[i].update(); particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+        init(); animate();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
