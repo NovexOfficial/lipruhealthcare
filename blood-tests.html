@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lipru Healthcare | Premium Home Blood Test Service</title>
+    <title>Blood Test Services | Lipru Healthcare</title>
     
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -57,95 +57,59 @@
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
         .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; text-decoration: none; }
         
-        /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
-        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
+        .nav-links > a:not(.btn), .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > a { color: var(--primary); }
 
-        /* Services Dropdown (Desktop) */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
         .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
         .dropdown:hover .dropdown-content { display: block; animation: slideUp 0.3s ease; }
         .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
-        .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background-color: var(--primary); color: white; padding-left: 25px; }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Mobile Hamburger & Menu */
         .hamburger { display: none; font-size: 24px; color: var(--primary); cursor: pointer; padding: 5px; }
-        .mobile-menu {
-            display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%;
-            background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999;
-        }
+        .mobile-menu { display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; }
         .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
         .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; }
         .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
-        
-        /* Mobile Submenu */
         .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
         .mobile-submenu.active { display: flex; }
         .mobile-submenu a { font-size: 14px; font-weight: 500; padding: 8px; }
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- HERO SECTION --- */
-        .hero { padding: 60px 0 80px; display: flex; align-items: center; gap: 40px; }
-        .hero-content { flex: 1; }
-        .trust-badge { display: inline-block; padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
-        .hero-title { font-size: 48px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
-        .hero-title span { color: var(--primary); }
-        .hero-desc { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; }
-        .hero-actions { display: flex; gap: 15px; flex-wrap: wrap; }
+        /* --- PAGE SPECIFIC STYLES --- */
+        .page-header { padding: 60px 0 40px; text-align: center; }
+        .page-header h1 { font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 20px; line-height: 1.2; }
+        .page-header p { font-size: 18px; color: var(--text-muted); max-width: 800px; margin: 0 auto 30px; line-height: 1.7; }
         
-        .hero-image { flex: 1; display: flex; justify-content: center; position: relative; }
-        .image-circle { width: 350px; height: 350px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 120px; color: var(--primary); position: relative; }
-        .float-badge { position: absolute; bottom: 10px; left: -20px; padding: 15px; display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 14px; }
+        section { padding: 40px 0 60px; }
+        .section-title { text-align: center; font-size: 32px; font-weight: 800; color: var(--text-main); margin-bottom: 40px; }
 
-        /* --- SECTIONS COMMON --- */
-        section { padding: 80px 0; }
-        .section-header { text-align: center; margin-bottom: 50px; display: flex; flex-direction: column; align-items: center; }
-        .section-header h2 { font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
-        .section-header p { color: var(--text-muted); font-size: 16px; max-width: 600px; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .grid-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; }
-        .grid-layout-small { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        /* Feature Grid (6 Cards) */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .feature-box { padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 30px; }
+        .feature-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; color: var(--primary); margin-bottom: 25px; }
+        .feature-box h3 { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 15px; }
+        .feature-box p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
 
-        /* --- CARDS & FEATURES --- */
-        .card { padding: 25px; position: relative; display: flex; flex-direction: column; }
-        .card-tag { position: absolute; top: -12px; right: 20px; background: #ef4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); }
-        .card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; flex-grow: 1; }
-        .price-box { margin-bottom: 20px; display: flex; align-items: baseline; gap: 10px; }
-        .price { font-size: 28px; font-weight: 800; color: var(--primary); }
-        .old-price { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
-        
-        .feature-card { padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .feature-card i { font-size: 30px; color: var(--primary); }
-        .feature-card h4 { font-size: 15px; font-weight: 600; }
+        /* Educational Section (Why regular tests) */
+        .edu-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .edu-content h3 { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+        .edu-list { list-style: none; }
+        .edu-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .edu-list i { font-size: 20px; color: var(--secondary); margin-top: 3px; }
+        .edu-list h4 { font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 5px; }
+        .edu-list p { font-size: 14px; color: var(--text-muted); }
 
-        /* --- HOW IT WORKS & STATS --- */
-        .steps-wrapper { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-        .step { flex: 1; min-width: 200px; text-align: center; padding: 30px 20px; position: relative; }
-        .step-num { width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; margin: 0 auto 15px; }
-        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; padding: 40px; }
-        .stat-item { text-align: center; }
-        .stat-item h3 { font-size: 40px; color: var(--primary); font-weight: 900; }
+        .edu-img-box { padding: 40px; border-radius: 30px; display: flex; justify-content: center; align-items: center; }
+        .edu-img-box i { font-size: 150px; color: var(--primary); opacity: 0.8; }
 
-        /* --- PARTNER LABS --- */
-        .partner-logos { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 30px; }
-        .partner-logo { padding: 15px 30px; font-size: 20px; font-weight: 800; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
-        
-        /* --- FAQ ACCORDION --- */
-        details { padding: 20px; margin-bottom: 20px; cursor: pointer; }
-        summary { font-weight: 700; font-size: 16px; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::-webkit-details-marker { display: none; }
-        details p { margin-top: 15px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-        /* --- CALL TO ACTION BANNER --- */
-        .cta-banner { background: linear-gradient(135deg, rgba(0,86,179,0.9), rgba(79,172,254,0.9)); color: white; padding: 50px; border-radius: 30px; text-align: center; margin: 40px 0; box-shadow: 0 10px 30px rgba(0,86,179,0.3); }
+        /* Call To Action Banner */
+        .cta-banner { background: linear-gradient(135deg, rgba(0,86,179,0.9), rgba(79,172,254,0.9)); color: white; padding: 50px; border-radius: 30px; text-align: center; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,86,179,0.3); }
 
         /* Footer */
         footer { background: var(--text-main); color: white; padding: 60px 0 20px; border-top-left-radius: 30px; border-top-right-radius: 30px; margin-top: 40px; }
@@ -155,10 +119,11 @@
         @media (max-width: 992px) {
             .nav-links { display: none; }
             .hamburger { display: block; }
+            .edu-wrapper { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 20px; }
-            .hero-actions { justify-content: center; margin-left: auto; margin-right: auto; }
+            .page-header h1 { font-size: 32px; }
+            .features-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -174,20 +139,18 @@
             
             <!-- Desktop Nav -->
             <nav class="nav-links">
-                <a href="index.html" class="active">Home</a>
+                <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 
-                <!-- Services Dropdown (No page reload on click) -->
+                <!-- Services Dropdown -->
                 <div class="dropdown">
-                    <span>Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></span>
+                    <a href="services.html" class="active">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
                     <div class="dropdown-content">
-                        <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
                         <a href="blood-tests.html"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
-                        
                         <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
-                        <a href="#"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
-                        <a href="#"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
-                        <a href="#"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
+                        <a href="services.html#imaging"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
+                        <a href="services.html#nutrition"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
+                        <a href="services.html#store"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
                     </div>
                 </div>
 
@@ -211,12 +174,11 @@
                     Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
                 </div>
                 <div class="mobile-submenu" id="mobile-submenu">
-                    <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
                     <a href="blood-tests.html">Blood Tests</a>
                     <a href="packages.html">Health Profiles</a>
-                    <a href="#">Imaging</a>
-                    <a href="#">Nutrition</a>
-                    <a href="#">Healthcare Store</a>
+                    <a href="services.html#imaging">Imaging</a>
+                    <a href="services.html#nutrition">Nutrition</a>
+                    <a href="services.html#store">Healthcare Store</a>
                 </div>
 
                 <a href="packages.html">Packages</a>
@@ -226,177 +188,117 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="container hero reveal">
-        <div class="hero-content">
-            <div class="trust-badge neu-pressed">
-                <i class="fa-solid fa-shield-halved"></i> NABL Certified | Trusted Since 2017
-            </div>
-            <h1 class="hero-title">Aapki Health, <br><span>Aapke Ghar Par.</span></h1>
-            <p class="hero-desc">Certified Labs • Fast Reports • Affordable Prices. Book your home blood test in just 60 seconds.</p>
-
-            <div class="hero-actions">
-                <a href="booking.html" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
-                <a href="tel:8149335679" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Now</a>
-            </div>
+    <!-- PAGE HEADER -->
+    <div class="container page-header reveal">
+        <h1>Getting a blood test is now simple, safe, and comfortable.</h1>
+        <p>Whether your doctor has advised a blood test or you simply want to check your health, Lipru Healthcare makes the process simple and stress-free.</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+            <a href="booking.html" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book Home Collection</a>
+            <a href="tel:8149335679" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Support</a>
         </div>
-        <div class="hero-image">
-            <div class="image-circle neu-pressed">
-                <i class="fa-solid fa-user-nurse"></i>
-                <div class="float-badge glass-panel">
-                    <i class="fa-solid fa-star" style="color:var(--accent)"></i> 4.9/5 Happy Patients
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- QUICK TRUST BADGES -->
-    <section class="container reveal" style="padding: 20px 0 60px;">
-        <div class="grid-layout-small">
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-microscope"></i>
-                <h4>NABL Certified Labs</h4>
-            </div>
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-house-medical"></i>
-                <h4>Free Home Collection</h4>
-            </div>
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-file-pdf"></i>
-                <h4>Reports in 24 Hours</h4>
-            </div>
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-tags"></i>
-                <h4>Affordable Pricing</h4>
-            </div>
-        </div>
-    </section>
-
-    <!-- EXACT 5 FEATURED SERVICES -->
+    <!-- CORE FEATURES (From User Content) -->
     <section class="container reveal">
-        <div class="section-header">
-            <h2>Our Core Services</h2>
-            <p>Comprehensive healthcare solutions under one roof.</p>
-        </div>
-        <div class="grid-services">
-            <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
-            <a href="blood-tests.html" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-droplet" style="color: #ef4444; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Blood Tests</h3>
-            </a>
+        <h2 class="section-title">Why Choose Our Lab Services?</h2>
+        <div class="features-grid">
             
-            <a href="packages.html" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-file-medical" style="color: #3b82f6; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Health Profiles</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-x-ray" style="color: #6366f1; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Imaging</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-leaf" style="color: #10b981; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Nutrition</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-pills" style="color: #f59e0b; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Healthcare Store</h3>
-            </a>
-        </div>
-    </section>
-
-    <!-- POPULAR PACKAGES -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Trending Health Packages</h2>
-            <p>Our most booked full body checkups.</p>
-        </div>
-        <div class="grid-layout" id="packages-preview">
-            <!-- Injected via JS -->
-        </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>How It Works</h2>
-            <p>Your health journey in 4 simple steps</p>
-        </div>
-        <div class="steps-wrapper neu-pressed" style="padding: 40px 20px; border-radius: 30px;">
-            <div class="step">
-                <div class="step-num">1</div>
-                <i class="fa-solid fa-mobile-screen" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Book Appointment</h4>
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-house-chimney-medical"></i></div>
+                <h3>Easy Home Lab Test Service</h3>
+                <p>No need to visit a pathology lab or wait in long queues. Lipru Healthcare makes Lab testing easy with home sample collection at your place and your preferred time.</p>
             </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <i class="fa-solid fa-house-chimney-medical" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Technician Visits</h4>
+
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-vials"></i></div>
+                <h3>All Types of Diagnostic Test Available</h3>
+                <p>We offer all types of Diagnostic tests — routine, special, and super-special — to meet every health need.</p>
             </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <i class="fa-solid fa-vial" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Sample Collection</h4>
+
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h3>Pathology Test at Special Prices</h3>
+                <p>Good health should not be a luxury. Our Special-cost Pathology Test ensure every parent, elder, and youngster can take care of their health without worry.</p>
             </div>
-            <div class="step">
-                <div class="step-num">4</div>
-                <i class="fa-solid fa-file-waveform" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Digital Report</h4>
+
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-heart-circle-check"></i></div>
+                <h3>Personalized Support & Guidance</h3>
+                <p>We treat every customer like our own family. That’s why we offer honest support and simple guidance — so your blood test experience becomes easy, stress-free, and filled with trust.</p>
             </div>
+
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-stopwatch"></i></div>
+                <h3>Get Lab Test Report On Time</h3>
+                <p>We understand how important timely Lab test reports are. That’s why Lipru Healthcare ensures you receive your report on time, every time.</p>
+            </div>
+
+            <div class="feature-box neu-flat">
+                <div class="feature-icon neu-pressed"><i class="fa-solid fa-certificate"></i></div>
+                <h3>Certified Health Test Reports</h3>
+                <p>In Health testing, quality is very important. That’s why Lipru Healthcare provides NABL-certified Lab test reports you can fully trust.</p>
+            </div>
+
         </div>
     </section>
 
-    <!-- PARTNER LABS -->
-    <section class="container reveal" style="padding-top: 20px;">
-        <div class="section-header">
-            <h2>Our Trusted Partner Labs</h2>
-            <p>We process your samples only at NABL & CAP certified laboratories.</p>
-        </div>
-        <div class="partner-logos">
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-microscope" style="color: var(--primary)"></i> Thyrocare</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-flask" style="color: var(--primary)"></i> Metropolis</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-vials" style="color: var(--primary)"></i> SRL Labs</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-dna" style="color: var(--primary)"></i> Lal PathLabs</div>
-        </div>
-    </section>
-
-    <!-- HEALTH STATISTICS -->
+    <!-- EDUCATIONAL SECTION: Why Time to Time Tests? -->
     <section class="container reveal">
-        <div class="stats-grid neu-flat">
-            <div class="stat-item"><h3 class="counter" data-target="50000">0</h3><p>Happy Customers</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>Blood Tests</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="500">0</h3><p>Certified Techs</p></div>
-            <div class="stat-item"><h3>24 Hrs</h3><p>Report Delivery</p></div>
+        <div class="edu-wrapper">
+            <div class="edu-img-box neu-pressed">
+                <i class="fa-solid fa-microscope"></i>
+            </div>
+            <div class="edu-content">
+                <h3>Why should you do a blood test time to time?</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px; line-height: 1.6;">
+                    Your blood holds the secret to your overall health. Routine checkups are the smartest way to understand your body's internal functions before symptoms even appear.
+                </p>
+                <ul class="edu-list">
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <h4>Early Detection of Diseases</h4>
+                            <p>Catch hidden issues like Diabetes, Thyroid, or Cholesterol problems at an early stage when they are easily treatable.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <h4>Prevent Nutritional Deficiencies</h4>
+                            <p>Identify shortages in Vitamin D, B12, Iron, or Calcium that cause fatigue, hair fall, and weakness.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <h4>Track Organ Health</h4>
+                            <p>Regular Liver (LFT) and Kidney (KFT) function tests help ensure your vital organs are working perfectly.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
+    <!-- SUPPORT LIKE FAMILY BANNER -->
     <section class="container reveal">
-        <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-        </div>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <details class="neu-flat">
-                <summary>Is home sample collection safe? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>Yes, our certified phlebotomists follow strict WHO hygiene protocols, use single-use sterile kits, and ensure complete safety during the home visit.</p>
-            </details>
-            <details class="neu-flat">
-                <summary>When will I receive my reports? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>Most standard blood test reports are delivered digitally via WhatsApp and Email within 24 hours of sample collection.</p>
-            </details>
-            <details class="neu-flat">
-                <summary>Do I need to fast before the test? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>It depends on the test you select. Profiles like Diabetes or Lipid usually require 8-10 hours of fasting. Our team will guide you upon booking.</p>
-            </details>
+        <div class="neu-flat" style="padding: 40px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; text-align: center; border-left: 8px solid var(--primary);">
+            <i class="fa-solid fa-hands-holding-child" style="font-size: 50px; color: var(--primary); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 15px;">We’re here to support you like family.</h2>
+            <p style="font-size: 16px; color: var(--text-muted); max-width: 800px; line-height: 1.7; margin-bottom: 20px;">
+                Lipru Healthcare is always here to support you. Whether you’re confused about which blood test to choose or need help understanding your report, you can always reach out to us.
+            </p>
+            <a href="https://wa.me/918149335679?" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Chat With Our Expert</a>
         </div>
     </section>
 
     <!-- FINAL CTA BANNER -->
-    <section class="container reveal" style="padding: 20px 0;">
+    <section class="container reveal">
         <div class="cta-banner">
-            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;">Take Charge of Your Health Today!</h2>
-            <p style="font-size: 18px; margin-bottom: 25px; opacity: 0.9;">Join 50,000+ happy patients. Book your home blood test in 60 seconds.</p>
-            <a href="booking.html" class="btn btn-outline" style="background: white; color: var(--primary); font-size: 18px; padding: 15px 35px;">
-                <i class="fa-solid fa-calendar-check"></i> Book Test Now
+            <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 15px;">Book Home Blood Test In Virar And Mumbai</h2>
+            <p style="font-size: 18px; margin-bottom: 30px; opacity: 0.9;">Accurate Reports • NABL Certified • Free Home Collection</p>
+            <a href="booking.html" class="btn btn-outline" style="background: white; color: var(--primary); font-size: 18px; padding: 15px 40px;">
+                <i class="fa-solid fa-calendar-check"></i> Book Your Slot Now
             </a>
         </div>
     </section>
@@ -413,7 +315,7 @@
                     <h4 style="margin-bottom: 15px;">Explore</h4>
                     <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
                     <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
-                    <p><a href="#" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
+                    <p><a href="services.html" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
                     <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
                 </div>
                 <div>
@@ -434,7 +336,6 @@
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
-        // 1. Mobile Menu Toggle Logic
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.querySelector('#hamburger-icon i');
@@ -446,38 +347,14 @@
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                // close submenu when menu closes
                 document.getElementById('mobile-submenu').classList.remove('active');
             }
         }
 
-        // 1.1 Mobile Submenu Accordion
         function toggleMobileSubmenu() {
-            const submenu = document.getElementById('mobile-submenu');
-            submenu.classList.toggle('active');
+            document.getElementById('mobile-submenu').classList.toggle('active');
         }
 
-        // 2. Package Data Injection
-        const topPackages = [
-            { name: "Full Body Profile Basic", tests: "CBC, Sugar, Thyroid, Liver, Kidney", price: 1599, oldPrice: 2500, tag: "36% OFF" },
-            { name: "Executive Checkup", tests: "360° checkup & Vital Organs", price: 1999, oldPrice: 3500, tag: "Most Booked" },
-            { name: "Diabetes Care Basic", tests: "Sugar control & Insulin response", price: 1099, oldPrice: 1500, tag: "Essential" }
-        ];
-
-        document.getElementById('packages-preview').innerHTML = topPackages.map(p => `
-            <div class="card neu-flat">
-                <span class="card-tag">${p.tag}</span>
-                <h3>${p.name}</h3>
-                <p><i class="fa-solid fa-list-check text-primary"></i> ${p.tests}</p>
-                <div class="price-box">
-                    <span class="price">₹${p.price}</span>
-                    <span class="old-price">₹${p.oldPrice}</span>
-                </div>
-                <a href="booking.html" class="btn btn-primary" style="width:100%">Book Package</a>
-            </div>
-        `).join('');
-
-        // 3. Scroll Reveal Animation
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -489,28 +366,6 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 4. Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        let animated = false;
-        window.addEventListener("scroll", () => {
-            if(animated) return;
-            const statsSection = document.querySelector('.stats-grid');
-            if(statsSection && statsSection.getBoundingClientRect().top < window.innerHeight) {
-                counters.forEach(counter => {
-                    const updateCount = () => {
-                        const target = +counter.getAttribute('data-target');
-                        const count = +counter.innerText;
-                        const inc = target / 100;
-                        if(count < target) { counter.innerText = Math.ceil(count + inc); setTimeout(updateCount, 20); }
-                        else { counter.innerText = target + "+"; }
-                    };
-                    updateCount();
-                });
-                animated = true;
-            }
-        });
-
-        // 5. 3D Particles Background Logic
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
