@@ -40,7 +40,7 @@
         .neu-pressed { background: var(--bg-color); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); border-radius: 20px; }
         .glass-panel { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
 
-        /* FIXED BUTTON STYLES (Added !important to prevent hide issue) */
+        /* FIXED BUTTON STYLES */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; font-size: 16px; }
         .btn-primary { background: var(--primary) !important; color: white !important; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
         .btn-primary:hover { background: #004494 !important; color: white !important; }
@@ -59,8 +59,8 @@
         
         /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
-        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > a { color: var(--primary); }
+        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
 
         /* Services Dropdown (Desktop) */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
@@ -177,15 +177,17 @@
                 <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
                 
-                <!-- Services Dropdown -->
+                <!-- Services Dropdown (No page reload on click) -->
                 <div class="dropdown">
-                    <a href="services.html">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
+                    <span>Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></span>
                     <div class="dropdown-content">
-                        <a href="services.html#blood-tests"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
-                        <a href="services.html#health-profiles"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
-                        <a href="services.html#imaging"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
-                        <a href="services.html#nutrition"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
-                        <a href="services.html#store"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
+                        <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
+                        <a href="blood-tests.html"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
+                        
+                        <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
+                        <a href="#"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
+                        <a href="#"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
+                        <a href="#"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
                     </div>
                 </div>
 
@@ -209,11 +211,12 @@
                     Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
                 </div>
                 <div class="mobile-submenu" id="mobile-submenu">
-                    <a href="services.html#blood-tests">Blood Tests</a>
-                    <a href="services.html#health-profiles">Health Profiles</a>
-                    <a href="services.html#imaging">Imaging</a>
-                    <a href="services.html#nutrition">Nutrition</a>
-                    <a href="services.html#store">Healthcare Store</a>
+                    <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
+                    <a href="blood-tests.html">Blood Tests</a>
+                    <a href="packages.html">Health Profiles</a>
+                    <a href="#">Imaging</a>
+                    <a href="#">Nutrition</a>
+                    <a href="#">Healthcare Store</a>
                 </div>
 
                 <a href="packages.html">Packages</a>
@@ -276,23 +279,25 @@
             <p>Comprehensive healthcare solutions under one roof.</p>
         </div>
         <div class="grid-services">
-            <a href="services.html#blood-tests" style="text-decoration: none;" class="feature-card neu-flat">
+            <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
+            <a href="blood-tests.html" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-droplet" style="color: #ef4444; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Blood Tests</h3>
             </a>
-            <a href="services.html#health-profiles" style="text-decoration: none;" class="feature-card neu-flat">
+            
+            <a href="packages.html" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-file-medical" style="color: #3b82f6; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Health Profiles</h3>
             </a>
-            <a href="services.html#imaging" style="text-decoration: none;" class="feature-card neu-flat">
+            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-x-ray" style="color: #6366f1; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Imaging</h3>
             </a>
-            <a href="services.html#nutrition" style="text-decoration: none;" class="feature-card neu-flat">
+            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-leaf" style="color: #10b981; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Nutrition</h3>
             </a>
-            <a href="services.html#store" style="text-decoration: none;" class="feature-card neu-flat">
+            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-pills" style="color: #f59e0b; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Healthcare Store</h3>
             </a>
@@ -408,7 +413,7 @@
                     <h4 style="margin-bottom: 15px;">Explore</h4>
                     <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
                     <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
-                    <p><a href="services.html" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
+                    <p><a href="#" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
                     <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
                 </div>
                 <div>
