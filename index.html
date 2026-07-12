@@ -20,7 +20,6 @@
             --secondary: #10b981;
             --accent: #f59e0b;
             --shadow-dark: #b8bcc2;
-            /* White shadow thoda kam (transparent) kiya gaya hai */
             --shadow-light: rgba(255, 255, 255, 0.6); 
             --glass-bg: rgba(224, 229, 236, 0.85);
         }
@@ -41,12 +40,13 @@
         .neu-pressed { background: var(--bg-color); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); border-radius: 20px; }
         .glass-panel { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
 
-        /* Buttons */
+        /* FIXED BUTTON STYLES (Added !important to prevent hide issue) */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; font-size: 16px; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .btn-primary { background: var(--primary) !important; color: white !important; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .btn-primary:hover { background: #004494 !important; color: white !important; }
         .btn-primary:active { box-shadow: inset 4px 4px 8px #004085, inset -4px -4px 8px #007bff; transform: translateY(2px); }
-        .btn-outline { background: transparent; color: var(--primary); box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
-        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn-outline { background: transparent !important; color: var(--primary) !important; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .btn-outline:hover { background: var(--primary) !important; color: white !important; }
 
         /* Reveal Animation */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
@@ -59,8 +59,8 @@
         
         /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a, .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
-        .nav-links > a:hover, .nav-links > a.active, .dropdown:hover > a { color: var(--primary); }
+        .nav-links > a:not(.btn), .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > a { color: var(--primary); }
 
         /* Services Dropdown (Desktop) */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
@@ -81,7 +81,7 @@
         }
         .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
         .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; }
-        .mobile-menu a:hover { background: var(--primary); color: white; }
+        .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
         
         /* Mobile Submenu */
         .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
@@ -276,27 +276,22 @@
             <p>Comprehensive healthcare solutions under one roof.</p>
         </div>
         <div class="grid-services">
-            <!-- 1. Blood Tests -->
             <a href="services.html#blood-tests" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-droplet" style="color: #ef4444; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Blood Tests</h3>
             </a>
-            <!-- 2. Health Profiles -->
             <a href="services.html#health-profiles" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-file-medical" style="color: #3b82f6; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Health Profiles</h3>
             </a>
-            <!-- 3. Imaging -->
             <a href="services.html#imaging" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-x-ray" style="color: #6366f1; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Imaging</h3>
             </a>
-            <!-- 4. Nutrition -->
             <a href="services.html#nutrition" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-leaf" style="color: #10b981; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Nutrition</h3>
             </a>
-            <!-- 5. Healthcare Store -->
             <a href="services.html#store" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-pills" style="color: #f59e0b; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Healthcare Store</h3>
@@ -407,7 +402,7 @@
             <div class="footer-grid">
                 <div>
                     <h3 style="color: #63b3ed; font-size: 24px; margin-bottom: 15px;"><i class="fa-solid fa-heart-pulse"></i> Lipru Healthcare</h3>
-                    <p style="color: #a0aec0; max-width: 300px;">Smart Health, Saved Wealth. Reliable home blood tests across India. Serving with trust since 2017.</p>
+                    <p style="color: #a0aec0; max-width: 300px;">Smart Health, Saved Wealth. Reliable home blood tests across India. Trusted Since 2017.</p>
                 </div>
                 <div>
                     <h4 style="margin-bottom: 15px;">Explore</h4>
