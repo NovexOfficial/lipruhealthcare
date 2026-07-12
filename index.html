@@ -59,13 +59,13 @@
         
         /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; user-select: none; }
         .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
 
-        /* Services Dropdown (Desktop) */
+        /* Services Dropdown (Desktop) - CLICK TO TOGGLE LOGIC */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
         .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
-        .dropdown:hover .dropdown-content { display: block; animation: slideUp 0.3s ease; }
+        .dropdown-content.show { display: block; animation: slideUp 0.3s ease; } /* Added .show class */
         .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background-color: var(--primary); color: white; padding-left: 25px; }
@@ -80,7 +80,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999;
         }
         .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
-        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; }
+        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; user-select: none; }
         .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
         
         /* Mobile Submenu */
@@ -126,6 +126,16 @@
         .feature-card i { font-size: 30px; color: var(--primary); }
         .feature-card h4 { font-size: 15px; font-weight: 600; }
 
+        .why-card { padding: 30px; display: flex; flex-direction: column; gap: 15px; text-align: left; }
+        .why-card i { font-size: 40px; color: var(--primary); margin-bottom: 5px; }
+        .why-card h3 { font-size: 20px; color: var(--text-main); font-weight: 700; }
+        .why-card p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+
+        .review-card { padding: 30px; text-align: left; }
+        .stars { color: var(--accent); font-size: 18px; margin-bottom: 15px; }
+        .review-text { font-style: italic; color: var(--text-muted); margin-bottom: 20px; font-size: 15px; }
+        .reviewer { font-weight: 700; color: var(--primary); }
+
         /* --- HOW IT WORKS & STATS --- */
         .steps-wrapper { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
         .step { flex: 1; min-width: 200px; text-align: center; padding: 30px 20px; position: relative; }
@@ -134,10 +144,13 @@
         .stat-item { text-align: center; }
         .stat-item h3 { font-size: 40px; color: var(--primary); font-weight: 900; }
 
-        /* --- PARTNER LABS --- */
+        /* --- PARTNER LABS & SERVICE AREAS --- */
         .partner-logos { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 30px; }
         .partner-logo { padding: 15px 30px; font-size: 20px; font-weight: 800; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
         
+        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+        .area-tag { padding: 10px 20px; font-size: 15px; font-weight: 600; color: var(--primary); border-radius: 50px; }
+
         /* --- FAQ ACCORDION --- */
         details { padding: 20px; margin-bottom: 20px; cursor: pointer; }
         summary { font-weight: 700; font-size: 16px; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
@@ -177,13 +190,12 @@
                 <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
                 
-                <!-- Services Dropdown (No page reload on click) -->
+                <!-- Services Dropdown (Click to toggle logic) -->
                 <div class="dropdown">
-                    <span>Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></span>
-                    <div class="dropdown-content">
-                        <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
+                    <!-- Added onclick event here to toggle the menu -->
+                    <span onclick="toggleDesktopDropdown(event)">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></span>
+                    <div class="dropdown-content" id="desktop-dropdown">
                         <a href="blood-tests.html"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
-                        
                         <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
                         <a href="#"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
                         <a href="#"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
@@ -207,11 +219,10 @@
                 <a href="about.html">About</a>
                 
                 <!-- Mobile Services Dropdown Accordion -->
-                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu()">
+                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu(event)">
                     Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
                 </div>
                 <div class="mobile-submenu" id="mobile-submenu">
-                    <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
                     <a href="blood-tests.html">Blood Tests</a>
                     <a href="packages.html">Health Profiles</a>
                     <a href="#">Imaging</a>
@@ -250,25 +261,45 @@
         </div>
     </section>
 
-    <!-- QUICK TRUST BADGES -->
-    <section class="container reveal" style="padding: 20px 0 60px;">
+    <!-- SMART HEALTH BANNER -->
+    <section class="container reveal" style="padding-top: 0; padding-bottom: 20px;">
+        <div class="neu-flat" style="padding: 40px; border-radius: 30px; border-left: 8px solid var(--primary);">
+            <h2 style="font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">Simple Blood Tests. Smart Health. Saved Wealth.</h2>
+            <p style="font-size: 16px; color: var(--text-muted); line-height: 1.7;">At Lipru Healthcare, we offer affordable home blood test service in Virar & Mumbai with accurate reports and personalized nutrition support — right at your doorstep. No guesswork, no fad diets — just what your body truly needs.</p>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="container reveal">
+        <div class="section-header">
+            <h2>Why Choose Us?</h2>
+        </div>
         <div class="grid-layout-small">
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-microscope"></i>
-                <h4>NABL Certified Labs</h4>
-            </div>
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-house-medical"></i>
-                <h4>Free Home Collection</h4>
-            </div>
-            <div class="feature-card neu-flat">
-                <i class="fa-solid fa-file-pdf"></i>
-                <h4>Reports in 24 Hours</h4>
-            </div>
-            <div class="feature-card neu-flat">
+            
+            <div class="why-card neu-flat">
                 <i class="fa-solid fa-tags"></i>
-                <h4>Affordable Pricing</h4>
+                <h3>Affordable Blood Tests</h3>
+                <p>Lipru Healthcare offers affordable home blood test service in Virar & Mumbai with accurate reporting and hygienic sample collection.</p>
             </div>
+            
+            <div class="why-card neu-flat">
+                <i class="fa-solid fa-headset"></i>
+                <h3>Support, On Time</h3>
+                <p>In blood test services, timely support is very important to help people get the right assistance. Lipru Healthcare makes on-time support easy, fast, and effective.</p>
+            </div>
+            
+            <div class="why-card neu-flat">
+                <i class="fa-solid fa-handshake-angle"></i>
+                <h3>Trusted Health Partner</h3>
+                <p>At Lipru Healthcare, customers come first. We offer honest, trusted services and associate only with partners you can rely on.</p>
+            </div>
+            
+            <div class="why-card neu-flat">
+                <i class="fa-solid fa-medal"></i>
+                <h3>Committed to Quality</h3>
+                <p>For Lipru Healthcare, quality isn’t a promise… it’s a responsibility we follow every single day.</p>
+            </div>
+
         </div>
     </section>
 
@@ -279,12 +310,10 @@
             <p>Comprehensive healthcare solutions under one roof.</p>
         </div>
         <div class="grid-services">
-            <!-- LINKED DIRECTLY TO BLOOD TESTS PAGE -->
             <a href="blood-tests.html" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-droplet" style="color: #ef4444; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Blood Tests</h3>
             </a>
-            
             <a href="packages.html" style="text-decoration: none;" class="feature-card neu-flat">
                 <i class="fa-solid fa-file-medical" style="color: #3b82f6; font-size: 35px;"></i>
                 <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Health Profiles</h3>
@@ -345,8 +374,33 @@
         </div>
     </section>
 
-    <!-- PARTNER LABS -->
-    <section class="container reveal" style="padding-top: 20px;">
+    <!-- PATIENT TESTIMONIALS -->
+    <section class="container reveal">
+        <div class="section-header">
+            <h2>What Our Patients Say</h2>
+            <p>Trusted by families across Virar & Mumbai</p>
+        </div>
+        <div class="grid-layout">
+            <div class="review-card neu-flat">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Very professional service! The phlebotomist arrived right on time and the collection was completely painless. Got my reports the same evening."</p>
+                <div class="reviewer">- Anjali Sharma, Virar</div>
+            </div>
+            <div class="review-card neu-flat">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Booked a Full Body Profile for my parents. Highly impressed with their hygienic approach and affordable pricing. Highly recommended."</p>
+                <div class="reviewer">- Rohit M., Mumbai</div>
+            </div>
+            <div class="review-card neu-flat">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"The WhatsApp booking makes it so easy. Didn't have to leave my home, and the NABL certified reports gave me total peace of mind."</p>
+                <div class="reviewer">- Priya Desai, Vasai</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTNER LABS & SERVICE AREAS -->
+    <section class="container reveal">
         <div class="section-header">
             <h2>Our Trusted Partner Labs</h2>
             <p>We process your samples only at NABL & CAP certified laboratories.</p>
@@ -356,6 +410,19 @@
             <div class="partner-logo neu-flat"><i class="fa-solid fa-flask" style="color: var(--primary)"></i> Metropolis</div>
             <div class="partner-logo neu-flat"><i class="fa-solid fa-vials" style="color: var(--primary)"></i> SRL Labs</div>
             <div class="partner-logo neu-flat"><i class="fa-solid fa-dna" style="color: var(--primary)"></i> Lal PathLabs</div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <h3 style="font-size: 24px; color: var(--primary); font-weight: 700;">Our Service Areas</h3>
+            <div class="area-tags">
+                <span class="area-tag neu-flat">Virar</span>
+                <span class="area-tag neu-flat">Mumbai</span>
+                <span class="area-tag neu-flat">Delhi</span>
+                <span class="area-tag neu-flat">Pune</span>
+                <span class="area-tag neu-flat">Nagpur</span>
+                <span class="area-tag neu-flat">Hyderabad</span>
+                <span class="area-tag neu-flat">Bengaluru</span>
+            </div>
         </div>
     </section>
 
@@ -413,7 +480,7 @@
                     <h4 style="margin-bottom: 15px;">Explore</h4>
                     <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
                     <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
-                    <p><a href="#" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
+                    <p><a href="javascript:void(0)" style="color: #a0aec0; text-decoration: none; cursor: default;">Our Services</a></p>
                     <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
                 </div>
                 <div>
@@ -434,7 +501,24 @@
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
-        // 1. Mobile Menu Toggle Logic
+        // 1. Desktop Dropdown Click Logic (Replaces Hover)
+        function toggleDesktopDropdown(event) {
+            event.stopPropagation(); // Prevents click from closing immediately
+            const dropdown = document.getElementById('desktop-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown if user clicks outside anywhere on the screen
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                const dropdown = document.getElementById('desktop-dropdown');
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // 2. Mobile Menu Toggle Logic
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.querySelector('#hamburger-icon i');
@@ -446,18 +530,17 @@
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                // close submenu when menu closes
                 document.getElementById('mobile-submenu').classList.remove('active');
             }
         }
 
-        // 1.1 Mobile Submenu Accordion
-        function toggleMobileSubmenu() {
-            const submenu = document.getElementById('mobile-submenu');
-            submenu.classList.toggle('active');
+        // 2.1 Mobile Submenu Accordion
+        function toggleMobileSubmenu(event) {
+            event.stopPropagation();
+            document.getElementById('mobile-submenu').classList.toggle('active');
         }
 
-        // 2. Package Data Injection
+        // 3. Package Data Injection
         const topPackages = [
             { name: "Full Body Profile Basic", tests: "CBC, Sugar, Thyroid, Liver, Kidney", price: 1599, oldPrice: 2500, tag: "36% OFF" },
             { name: "Executive Checkup", tests: "360° checkup & Vital Organs", price: 1999, oldPrice: 3500, tag: "Most Booked" },
@@ -477,7 +560,7 @@
             </div>
         `).join('');
 
-        // 3. Scroll Reveal Animation
+        // 4. Scroll Reveal Animation
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -489,7 +572,7 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 4. Counter Animation
+        // 5. Counter Animation
         const counters = document.querySelectorAll('.counter');
         let animated = false;
         window.addEventListener("scroll", () => {
@@ -510,7 +593,7 @@
             }
         });
 
-        // 5. 3D Particles Background Logic
+        // 6. 3D Particles Background Logic
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
