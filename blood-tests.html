@@ -57,24 +57,35 @@
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
         .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; text-decoration: none; }
         
+        /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > a { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; }
-        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > a { color: var(--primary); }
+        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; user-select: none; }
+        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
 
+        /* Services Dropdown (Click Toggle Logic) */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
         .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
-        .dropdown:hover .dropdown-content { display: block; animation: slideUp 0.3s ease; }
+        /* ONLY show when the .show class is added via JavaScript */
+        .dropdown-content.show { display: block; animation: slideUp 0.3s ease; }
+        
         .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
+        .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background-color: var(--primary); color: white; padding-left: 25px; }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Mobile Hamburger & Menu */
         .hamburger { display: none; font-size: 24px; color: var(--primary); cursor: pointer; padding: 5px; }
-        .mobile-menu { display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; }
+        .mobile-menu {
+            display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%;
+            background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999;
+        }
         .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
-        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; }
+        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; user-select: none; }
         .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
+        
+        /* Mobile Submenu */
         .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
         .mobile-submenu.active { display: flex; }
         .mobile-submenu a { font-size: 14px; font-weight: 500; padding: 8px; }
@@ -142,15 +153,18 @@
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 
-                <!-- Services Dropdown -->
+                <!-- Services Dropdown (Click to toggle logic) -->
                 <div class="dropdown">
-                    <a href="services.html" class="active">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
-                    <div class="dropdown-content">
-                        <a href="blood-tests.html"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
+                    <!-- <span> element ensure karta hai ki click karne par page load na ho -->
+                    <span onclick="toggleDesktopDropdown(event)">
+                        Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </span>
+                    <div class="dropdown-content" id="desktop-dropdown">
+                        <a href="blood-tests.html" style="color: var(--primary);"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
                         <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
-                        <a href="services.html#imaging"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
-                        <a href="services.html#nutrition"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
-                        <a href="services.html#store"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
+                        <a href="#"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
+                        <a href="#"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
+                        <a href="#"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
                     </div>
                 </div>
 
@@ -170,15 +184,15 @@
                 <a href="about.html">About</a>
                 
                 <!-- Mobile Services Dropdown Accordion -->
-                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu()">
+                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu(event)">
                     Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
                 </div>
                 <div class="mobile-submenu" id="mobile-submenu">
-                    <a href="blood-tests.html">Blood Tests</a>
+                    <a href="blood-tests.html" style="color: var(--primary);">Blood Tests</a>
                     <a href="packages.html">Health Profiles</a>
-                    <a href="services.html#imaging">Imaging</a>
-                    <a href="services.html#nutrition">Nutrition</a>
-                    <a href="services.html#store">Healthcare Store</a>
+                    <a href="#">Imaging</a>
+                    <a href="#">Nutrition</a>
+                    <a href="#">Healthcare Store</a>
                 </div>
 
                 <a href="packages.html">Packages</a>
@@ -198,7 +212,7 @@
         </div>
     </div>
 
-    <!-- CORE FEATURES (From User Content) -->
+    <!-- CORE FEATURES -->
     <section class="container reveal">
         <h2 class="section-title">Why Choose Our Lab Services?</h2>
         <div class="features-grid">
@@ -315,7 +329,7 @@
                     <h4 style="margin-bottom: 15px;">Explore</h4>
                     <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
                     <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
-                    <p><a href="services.html" style="color: #a0aec0; text-decoration: none;">Our Services</a></p>
+                    <p><a href="javascript:void(0)" style="color: #a0aec0; text-decoration: none; cursor: default;">Our Services</a></p>
                     <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
                 </div>
                 <div>
@@ -336,6 +350,24 @@
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
+        // 1. Desktop Dropdown Click Logic (Replaces Hover)
+        function toggleDesktopDropdown(event) {
+            event.stopPropagation(); // Prevents click from closing immediately
+            const dropdown = document.getElementById('desktop-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown if user clicks outside anywhere on the screen
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                const dropdown = document.getElementById('desktop-dropdown');
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // 2. Mobile Menu Toggle Logic
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.querySelector('#hamburger-icon i');
@@ -347,14 +379,18 @@
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
+                // close submenu when menu closes
                 document.getElementById('mobile-submenu').classList.remove('active');
             }
         }
 
-        function toggleMobileSubmenu() {
+        // 2.1 Mobile Submenu Accordion
+        function toggleMobileSubmenu(event) {
+            event.stopPropagation();
             document.getElementById('mobile-submenu').classList.toggle('active');
         }
 
+        // 3. Scroll Reveal Animation
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -366,6 +402,7 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
+        // 4. 3D Particles Background Logic
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
