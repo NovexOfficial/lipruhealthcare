@@ -59,14 +59,16 @@
         
         /* Desktop Nav */
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; user-select: none; }
-        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
+        .nav-links > a:not(.btn) { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; user-select: none; }
+        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn) { color: var(--primary); }
 
-        /* Services Dropdown (Click Toggle Logic) */
+        /* Services Dropdown (Desktop) - Strictly Toggle Logic */
         .dropdown { position: relative; display: inline-block; padding: 10px 0; }
+        .dropdown-toggle-btn { color: var(--text-main); font-weight: 600; cursor: pointer; user-select: none; transition: color 0.3s; display: flex; align-items: center; gap: 5px; }
+        .dropdown-toggle-btn:hover { color: var(--primary); }
+        
         .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
-        /* ONLY show when the .show class is added via JavaScript */
-        .dropdown-content.show { display: block; animation: slideUp 0.3s ease; }
+        .dropdown-content.show { display: block; animation: slideUp 0.3s ease; } /* Only shows when clicked */
         
         .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
         .dropdown-content a:last-child { border-bottom: none; }
@@ -82,8 +84,11 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999;
         }
         .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
-        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; user-select: none; }
+        .mobile-menu a { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; user-select: none; }
         .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
+        
+        .mobile-submenu-title { color: var(--text-main); font-weight: 600; padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 5px; }
+        .mobile-submenu-title:hover { background: var(--bg-color); color: var(--primary); }
         
         /* Mobile Submenu */
         .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
@@ -153,12 +158,12 @@
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 
-                <!-- Services Dropdown (Click to toggle logic) -->
+                <!-- Services Dropdown (STRICT CLICK TO TOGGLE) -->
                 <div class="dropdown">
-                    <!-- <span> element ensure karta hai ki click karne par page load na ho -->
-                    <span onclick="toggleDesktopDropdown(event)">
-                        Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
-                    </span>
+                    <!-- <div> use kiya hai, <a> tag nahi. Ye page kabhi reload/change nahi karega -->
+                    <div class="dropdown-toggle-btn" onclick="toggleDesktopDropdown(event)">
+                        Services <i class="fa-solid fa-chevron-down"></i>
+                    </div>
                     <div class="dropdown-content" id="desktop-dropdown">
                         <a href="blood-tests.html" style="color: var(--primary);"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
                         <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
@@ -174,7 +179,7 @@
             </nav>
 
             <!-- Mobile Hamburger Icon -->
-            <div class="hamburger" id="hamburger-icon" onclick="toggleMobileMenu()">
+            <div class="hamburger" id="hamburger-icon" onclick="toggleMobileMenu(event)">
                 <i class="fa-solid fa-bars"></i>
             </div>
 
@@ -185,7 +190,7 @@
                 
                 <!-- Mobile Services Dropdown Accordion -->
                 <div class="mobile-submenu-title" onclick="toggleMobileSubmenu(event)">
-                    Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    Services <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="mobile-submenu" id="mobile-submenu">
                     <a href="blood-tests.html" style="color: var(--primary);">Blood Tests</a>
@@ -350,14 +355,15 @@
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
-        // 1. Desktop Dropdown Click Logic (Replaces Hover)
+        // 1. Desktop Dropdown Toggle Logic (Strict Click)
         function toggleDesktopDropdown(event) {
-            event.stopPropagation(); // Prevents click from closing immediately
+            event.preventDefault(); // Default click action band
+            event.stopPropagation(); // Event ko yahi rok diya
             const dropdown = document.getElementById('desktop-dropdown');
             dropdown.classList.toggle('show');
         }
 
-        // Close dropdown if user clicks outside anywhere on the screen
+        // Close dropdown if user clicks outside
         window.onclick = function(event) {
             if (!event.target.closest('.dropdown')) {
                 const dropdown = document.getElementById('desktop-dropdown');
@@ -368,7 +374,8 @@
         }
 
         // 2. Mobile Menu Toggle Logic
-        function toggleMobileMenu() {
+        function toggleMobileMenu(event) {
+            event.preventDefault();
             const menu = document.getElementById('mobile-menu');
             const icon = document.querySelector('#hamburger-icon i');
             menu.classList.toggle('active');
@@ -379,13 +386,14 @@
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                // close submenu when menu closes
+                // Close submenu when mobile menu closes
                 document.getElementById('mobile-submenu').classList.remove('active');
             }
         }
 
-        // 2.1 Mobile Submenu Accordion
+        // 2.1 Mobile Submenu Accordion Toggle (Strict Click)
         function toggleMobileSubmenu(event) {
+            event.preventDefault();
             event.stopPropagation();
             document.getElementById('mobile-submenu').classList.toggle('active');
         }
