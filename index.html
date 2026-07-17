@@ -583,7 +583,7 @@
 
         // 6. Number Counter Animation for Stats
         const counters = document.querySelectorAll('.counter');
-        const speed = 200; 
+        const speed = 200;
 
         counters.forEach(counter => {
             const updateCount = () => {
@@ -637,7 +637,7 @@
             update() {
                 if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
                 if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
-                
+
                 this.x += this.directionX;
                 this.y += this.directionY;
                 this.draw();
@@ -654,7 +654,7 @@
                 let directionX = (Math.random() * 1) - 0.5;
                 let directionY = (Math.random() * 1) - 0.5;
                 let color = 'rgba(0, 86, 179, 0.15)'; // Light primary color
-                
+
                 particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
             }
         }
