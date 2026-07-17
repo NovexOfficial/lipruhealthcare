@@ -3,633 +3,774 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lipru Healthcare | Premium Home Blood Test Service</title>
+    <title>Lipru Healthcare & Nutrition Store</title>
+    <!-- Tailwind CSS for Layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons (Updated to 6.5.2) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <style>
-        /* Core Neumorphic Variables */
         :root {
-            --bg-color: #e0e5ec;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --primary: #0056b3;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --shadow-dark: #b8bcc2;
-            --shadow-light: rgba(255, 255, 255, 0.6); 
-            --glass-bg: rgba(224, 229, 236, 0.85);
+            --bg-color: #eef2f7;
+            --text-color: #2b3a4a;
+            --primary-color: #3a86ff;
+            --primary-light: #4361ee;
+            --shadow-dark: #cfd7df;
+            --shadow-light: #ffffff;
+            --accent-green: #06d6a0;
         }
 
-        /* Base & Reset */
-        html { scroll-behavior: smooth; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; position: relative; }
-        
-        /* 3D Particle Background */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-
-        /* Neumorphic Utilities */
-        .neu-flat { background: var(--bg-color); box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); border-radius: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .neu-flat:hover { transform: translateY(-5px); box-shadow: 12px 12px 20px var(--shadow-dark), -12px -12px 20px var(--shadow-light); }
-        .neu-pressed { background: var(--bg-color); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); border-radius: 20px; }
-        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
-
-        /* FIXED BUTTON STYLES */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; font-size: 16px; }
-        .btn-primary { background: var(--primary) !important; color: white !important; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
-        .btn-primary:hover { background: #004494 !important; color: white !important; }
-        .btn-primary:active { box-shadow: inset 4px 4px 8px #004085, inset -4px -4px 8px #007bff; transform: translateY(2px); }
-        .btn-outline { background: transparent !important; color: var(--primary) !important; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
-        .btn-outline:hover { background: var(--primary) !important; color: white !important; }
-
-        /* Reveal Animation */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* --- HEADER & NAVIGATION --- */
-        header { position: sticky; top: 0; z-index: 1000; padding: 15px 0; transition: all 0.3s ease; }
-        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
-        .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        
-        /* Desktop Nav */
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links > a:not(.btn), .dropdown > span { color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; cursor: pointer; user-select: none; }
-        .nav-links > a:not(.btn):hover, .nav-links > a.active:not(.btn), .dropdown:hover > span { color: var(--primary); }
-
-        /* Services Dropdown (Desktop) - CLICK TO TOGGLE LOGIC */
-        .dropdown { position: relative; display: inline-block; padding: 10px 0; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background-color: var(--bg-color); border-radius: 12px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 1001; overflow: hidden; }
-        .dropdown-content.show { display: block; animation: slideUp 0.3s ease; } /* Added .show class */
-        .dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-weight: 500; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.3s; }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: var(--primary); color: white; padding-left: 25px; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Mobile Hamburger & Menu */
-        .hamburger { display: none; font-size: 24px; color: var(--primary); cursor: pointer; padding: 5px; }
-        .mobile-menu {
-            display: none; flex-direction: column; gap: 10px; position: absolute; top: 100%; left: 0; width: 100%;
-            background: var(--bg-color); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
         }
-        .mobile-menu.active { display: flex; animation: slideDown 0.3s ease forwards; }
-        .mobile-menu a, .mobile-submenu-title { color: var(--text-main); font-weight: 600; text-decoration: none; padding: 10px; border-radius: 10px; text-align: center; display: block; cursor: pointer; user-select: none; }
-        .mobile-menu a:hover:not(.btn) { background: var(--primary); color: white; }
-        
-        /* Mobile Submenu */
-        .mobile-submenu { display: none; flex-direction: column; background: rgba(0,0,0,0.03); border-radius: 10px; margin: 0 10px; }
-        .mobile-submenu.active { display: flex; }
-        .mobile-submenu a { font-size: 14px; font-weight: 500; padding: 8px; }
 
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- HERO SECTION --- */
-        .hero { padding: 60px 0 80px; display: flex; align-items: center; gap: 40px; }
-        .hero-content { flex: 1; }
-        .trust-badge { display: inline-block; padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
-        .hero-title { font-size: 48px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
-        .hero-title span { color: var(--primary); }
-        .hero-desc { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; }
-        .hero-actions { display: flex; gap: 15px; flex-wrap: wrap; }
-        
-        .hero-image { flex: 1; display: flex; justify-content: center; position: relative; }
-        .image-circle { width: 350px; height: 350px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 120px; color: var(--primary); position: relative; }
-        .float-badge { position: absolute; bottom: 10px; left: -20px; padding: 15px; display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 14px; }
-
-        /* --- SECTIONS COMMON --- */
-        section { padding: 80px 0; }
-        .section-header { text-align: center; margin-bottom: 50px; display: flex; flex-direction: column; align-items: center; }
-        .section-header h2 { font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
-        .section-header p { color: var(--text-muted); font-size: 16px; max-width: 600px; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .grid-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; }
-        .grid-layout-small { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-
-        /* --- CARDS & FEATURES --- */
-        .card { padding: 25px; position: relative; display: flex; flex-direction: column; }
-        .card-tag { position: absolute; top: -12px; right: 20px; background: #ef4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); }
-        .card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; flex-grow: 1; }
-        .price-box { margin-bottom: 20px; display: flex; align-items: baseline; gap: 10px; }
-        .price { font-size: 28px; font-weight: 800; color: var(--primary); }
-        .old-price { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
-        
-        .feature-card { padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .feature-card i { font-size: 30px; color: var(--primary); }
-        .feature-card h4 { font-size: 15px; font-weight: 600; }
-
-        .why-card { padding: 30px; display: flex; flex-direction: column; gap: 15px; text-align: left; }
-        .why-card i { font-size: 40px; color: var(--primary); margin-bottom: 5px; }
-        .why-card h3 { font-size: 20px; color: var(--text-main); font-weight: 700; }
-        .why-card p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
-
-        .review-card { padding: 30px; text-align: left; }
-        .stars { color: var(--accent); font-size: 18px; margin-bottom: 15px; }
-        .review-text { font-style: italic; color: var(--text-muted); margin-bottom: 20px; font-size: 15px; }
-        .reviewer { font-weight: 700; color: var(--primary); }
-
-        /* --- HOW IT WORKS & STATS --- */
-        .steps-wrapper { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-        .step { flex: 1; min-width: 200px; text-align: center; padding: 30px 20px; position: relative; }
-        .step-num { width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; margin: 0 auto 15px; }
-        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; padding: 40px; }
-        .stat-item { text-align: center; }
-        .stat-item h3 { font-size: 40px; color: var(--primary); font-weight: 900; }
-
-        /* --- PARTNER LABS & SERVICE AREAS --- */
-        .partner-logos { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 30px; }
-        .partner-logo { padding: 15px 30px; font-size: 20px; font-weight: 800; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
-        
-        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-        .area-tag { padding: 10px 20px; font-size: 15px; font-weight: 600; color: var(--primary); border-radius: 50px; }
-
-        /* --- FAQ ACCORDION --- */
-        details { padding: 20px; margin-bottom: 20px; cursor: pointer; }
-        summary { font-weight: 700; font-size: 16px; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::-webkit-details-marker { display: none; }
-        details p { margin-top: 15px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-        /* --- CALL TO ACTION BANNER --- */
-        .cta-banner { background: linear-gradient(135deg, rgba(0,86,179,0.9), rgba(79,172,254,0.9)); color: white; padding: 50px; border-radius: 30px; text-align: center; margin: 40px 0; box-shadow: 0 10px 30px rgba(0,86,179,0.3); }
-
-        /* Footer */
-        footer { background: var(--text-main); color: white; padding: 60px 0 20px; border-top-left-radius: 30px; border-top-right-radius: 30px; margin-top: 40px; }
-        .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .nav-links { display: none; }
-            .hamburger { display: block; }
+        /* Neumorphic Shadow Utility Classes */
+        .neu-flat {
+            background: var(--bg-color);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            border-radius: 20px;
+            transition: all 0.3s ease;
         }
-        @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 20px; }
-            .hero-actions { justify-content: center; margin-left: auto; margin-right: auto; }
+
+        .neu-flat:hover {
+            box-shadow: 12px 12px 20px var(--shadow-dark), -12px -12px 20px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+
+        .neu-pressed {
+            background: var(--bg-color);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+            border-radius: 20px;
+        }
+
+        .neu-btn {
+            background: var(--bg-color);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .neu-btn:active {
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+        }
+
+        .neu-inset-input {
+            background: var(--bg-color);
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            border: none;
+            outline: none;
+        }
+
+        /* Active Navigation States */
+        .active-tab {
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+            color: var(--primary-color) !important;
+        }
+
+        /* Cart Drawer Animation */
+        .cart-drawer {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cart-drawer.open {
+            transform: translateX(0);
+        }
+
+        /* Scroll Animation Utilities */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body>
+<body class="p-0 m-0">
 
-    <!-- 3D Particle Background Canvas -->
-    <canvas id="bg-canvas"></canvas>
+    <!-- 1. HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 w-full px-6 py-4 bg-[#eef2f7]/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-10 h-10 flex items-center justify-center rounded-xl neu-flat text-blue-600 text-xl font-bold">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-800">Lipru <span class="text-blue-600">Healthcare</span></span>
+            </a>
 
-    <!-- HEADER WITH DROPDOWN & HAMBURGER -->
-    <header class="glass-panel" style="margin: 10px 20px; border-radius: 20px;">
-        <div class="container nav-wrapper">
-            <a href="index.html" class="logo"><i class="fa-solid fa-heart-pulse"></i> Lipru</a>
-            
-            <!-- Desktop Nav -->
-            <nav class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="about.html">About</a>
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-6">
+                <button onclick="scrollToSection('hero')" class="px-4 py-2 text-sm font-medium text-slate-600 neu-btn active-tab" id="nav-home">Home</button>
+                <button onclick="scrollToSection('packages')" class="px-4 py-2 text-sm font-medium text-slate-600 neu-btn" id="nav-packages">Diagnostics</button>
+                <button onclick="scrollToSection('store')" class="px-4 py-2 text-sm font-medium text-slate-600 neu-btn" id="nav-store">Nutrition Store</button>
                 
-                <!-- Services Dropdown (Click to toggle logic) -->
-                <div class="dropdown">
-                    <!-- Added onclick event here to toggle the menu -->
-                    <span onclick="toggleDesktopDropdown(event)">Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></span>
-                    <div class="dropdown-content" id="desktop-dropdown">
-                        <a href="blood-tests.html"><i class="fa-solid fa-droplet" style="width: 20px;"></i> Blood Tests</a>
-                        <a href="packages.html"><i class="fa-solid fa-file-medical" style="width: 20px;"></i> Health Profiles</a>
-                        <a href="#"><i class="fa-solid fa-x-ray" style="width: 20px;"></i> Imaging</a>
-                        <a href="#"><i class="fa-solid fa-leaf" style="width: 20px;"></i> Nutrition</a>
-                        <a href="#"><i class="fa-solid fa-pills" style="width: 20px;"></i> Healthcare Store</a>
+                <!-- Services Dropdown Trigger -->
+                <div class="relative">
+                    <button onclick="toggleDesktopDropdown(event)" class="px-4 py-2 text-sm font-medium text-slate-600 neu-btn flex items-center gap-2">
+                        Care Programs <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <!-- Dropdown List -->
+                    <div id="desktop-dropdown" class="absolute right-0 mt-3 w-56 rounded-2xl bg-[#eef2f7] shadow-xl border border-white/50 p-2 hidden z-50">
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-200/50 rounded-xl transition">Weight Management</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-200/50 rounded-xl transition">Diabetes Reversal</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-200/50 rounded-xl transition">Keto & Vegan Diet plans</a>
                     </div>
                 </div>
-
-                <a href="packages.html">Packages</a>
-                <a href="contact.html">Contact</a>
-                <a href="booking.html" class="btn btn-outline" style="padding: 8px 20px; margin-left: 10px;">Book Now</a>
             </nav>
 
-            <!-- Mobile Hamburger Icon -->
-            <div class="hamburger" id="hamburger-icon" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars"></i>
+            <!-- Quick Action Buttons (Cart & Quick Book) -->
+            <div class="flex items-center gap-4">
+                <!-- Shopping Cart Icon with Badge -->
+                <button onclick="toggleCart()" class="relative w-12 h-12 flex items-center justify-center neu-btn text-slate-700 hover:text-blue-600">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+
+                <!-- Emergency Contact Button -->
+                <a href="tel:+919876543210" class="hidden lg:flex items-center gap-2 px-5 py-3 text-sm font-semibold text-emerald-600 neu-btn">
+                    <i class="fa-solid fa-phone-volume animate-bounce"></i> Care Helpline
+                </a>
+
+                <!-- Hamburger Button (Mobile Only) -->
+                <button onclick="toggleMobileMenu()" id="hamburger-icon" class="md:hidden w-12 h-12 flex items-center justify-center neu-btn text-slate-700">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
             </div>
+        </div>
 
-            <!-- Mobile Dropdown Menu -->
-            <div class="mobile-menu neu-pressed" id="mobile-menu">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                
-                <!-- Mobile Services Dropdown Accordion -->
-                <div class="mobile-submenu-title" onclick="toggleMobileSubmenu(event)">
-                    Services <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
-                </div>
-                <div class="mobile-submenu" id="mobile-submenu">
-                    <a href="blood-tests.html">Blood Tests</a>
-                    <a href="packages.html">Health Profiles</a>
-                    <a href="#">Imaging</a>
-                    <a href="#">Nutrition</a>
-                    <a href="#">Healthcare Store</a>
-                </div>
-
-                <a href="packages.html">Packages</a>
-                <a href="contact.html">Contact</a>
-                <a href="booking.html" class="btn btn-primary" style="margin-top: 10px;">Book Now</a>
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 rounded-3xl p-4 neu-pressed flex flex-col gap-3 transition-all duration-300">
+            <button onclick="scrollToSection('hero'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-200/50 font-medium">Home</button>
+            <button onclick="scrollToSection('packages'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-200/50 font-medium">Diagnostics</button>
+            <button onclick="scrollToSection('store'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-200/50 font-medium">Nutrition Store</button>
+            <div class="border-t border-slate-300 my-1"></div>
+            <button onclick="toggleMobileSubmenu(event)" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-200/50 font-medium flex justify-between items-center">
+                Special Care Programs <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div id="mobile-submenu" class="hidden pl-6 flex flex-col gap-2">
+                <a href="#" class="block py-2 text-slate-600 text-sm">Weight Loss Plan</a>
+                <a href="#" class="block py-2 text-slate-600 text-sm">Personalized Diets</a>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="container hero reveal">
-        <div class="hero-content">
-            <div class="trust-badge neu-pressed">
-                <i class="fa-solid fa-shield-halved"></i> NABL Certified | Trusted Since 2017
+    <!-- 2. HERO SECTION -->
+    <section id="hero" class="relative max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Side Text Content -->
+        <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full neu-pressed text-xs font-semibold text-blue-600 w-fit">
+                <i class="fa-solid fa-shield-halved"></i> Certified & ISO Approved Healthcare Brand
             </div>
-            <h1 class="hero-title">Aapki Health, <br><span>Aapke Ghar Par.</span></h1>
-            <p class="hero-desc">Certified Labs • Fast Reports • Affordable Prices. Book your home blood test in just 60 seconds.</p>
-
-            <div class="hero-actions">
-                <a href="booking.html" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
-                <a href="tel:8149335679" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Now</a>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight">
+                Nutrition & Care <br>Jo Aapko De Ek <span class="text-blue-600">Nayi Energy!</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-xl">
+                Lipru Healthcare lekar aaya hai custom diagnostic health checkups aur high-quality nutritional supplements ek hi jagah. Doctor's trust, premium quality, aur fast doorstep delivery.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-2">
+                <button onclick="scrollToSection('store')" class="px-8 py-4 bg-blue-600 text-white rounded-2xl shadow-lg hover:bg-blue-700 transition font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping"></i> Shop Supplements
+                </button>
+                <button onclick="scrollToSection('packages')" class="px-8 py-4 text-slate-700 font-semibold rounded-2xl neu-btn flex items-center gap-2">
+                    <i class="fa-solid fa-microscope"></i> Book Lab Test
+                </button>
             </div>
         </div>
-        <div class="hero-image">
-            <div class="image-circle neu-pressed">
-                <i class="fa-solid fa-user-nurse"></i>
-                <div class="float-badge glass-panel">
-                    <i class="fa-solid fa-star" style="color:var(--accent)"></i> 4.9/5 Happy Patients
+
+        <!-- Right Side Hero Illustration (Fully Neumorphic Interactive Card) -->
+        <div class="lg:col-span-5 flex justify-center">
+            <div class="w-full max-w-md p-8 neu-flat relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl"></div>
+                <div class="flex flex-col items-center text-center space-y-6">
+                    <div class="w-24 h-24 rounded-full neu-pressed flex items-center justify-center text-blue-600 text-4xl">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">Virtual Wellness Assistant</h3>
+                        <p class="text-sm text-slate-500 mt-1">Apna perfect lifestyle product search karo</p>
+                    </div>
+                    <!-- Custom Local Search Widget -->
+                    <div class="w-full relative">
+                        <input type="text" id="store-search-input" onkeyup="searchStore()" placeholder="Whey protein, green tea, vitamins..." class="w-full px-5 py-4 rounded-2xl neu-inset-input text-slate-700 placeholder-slate-400 text-sm focus:ring-2 focus:ring-blue-400">
+                        <button class="absolute right-3 top-3 w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-around w-full border-t border-slate-300/50 pt-4 text-xs text-slate-500">
+                        <div><i class="fa-solid fa-truck-fast text-blue-500 mb-1 text-lg"></i><p>Same Day Delivery</p></div>
+                        <div><i class="fa-solid fa-circle-check text-emerald-500 mb-1 text-lg"></i><p>100% Pure Lab Tested</p></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SMART HEALTH BANNER -->
-    <section class="container reveal" style="padding-top: 0; padding-bottom: 20px;">
-        <div class="neu-flat" style="padding: 40px; border-radius: 30px; border-left: 8px solid var(--primary);">
-            <h2 style="font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">Simple Blood Tests. Smart Health. Saved Wealth.</h2>
-            <p style="font-size: 16px; color: var(--text-muted); line-height: 1.7;">At Lipru Healthcare, we offer affordable home blood test service in Virar & Mumbai with accurate reports and personalized nutrition support — right at your doorstep. No guesswork, no fad diets — just what your body truly needs.</p>
+    <!-- 3. REAL-TIME STATS LOGIC -->
+    <section class="max-w-7xl mx-auto px-6 py-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 stats-grid">
+            <div class="p-6 text-center neu-flat">
+                <h3 class="text-3xl font-extrabold text-blue-600 counter" data-target="15000">0</h3>
+                <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Happy Users Served</p>
+            </div>
+            <div class="p-6 text-center neu-flat">
+                <h3 class="text-3xl font-extrabold text-emerald-500 counter" data-target="250">0</h3>
+                <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Wellness Supplements</p>
+            </div>
+            <div class="p-6 text-center neu-flat">
+                <h3 class="text-3xl font-extrabold text-orange-500 counter" data-target="45">0</h3>
+                <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Diagnostic Profiles</p>
+            </div>
+            <div class="p-6 text-center neu-flat">
+                <h3 class="text-3xl font-extrabold text-purple-600 counter" data-target="99">0</h3>
+                <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">% Customer Satisfaction</p>
+            </div>
         </div>
     </section>
 
-    <!-- WHY CHOOSE US -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Why Choose Us?</h2>
-        </div>
-        <div class="grid-layout-small">
+    <!-- 4. DIAGNOSTICS & LAB PACKAGES SECTION -->
+    <section id="packages" class="max-w-7xl mx-auto px-6 py-16 reveal">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl font-bold text-slate-800">Preventive Diagnostics Lab Profiles</h2>
+            <p class="text-slate-500 mt-2">Ghar se blood sample collection, digital reports directly over email & WhatsApp inside 24 hours.</p>
             
-            <div class="why-card neu-flat">
-                <i class="fa-solid fa-tags"></i>
-                <h3>Affordable Blood Tests</h3>
-                <p>Lipru Healthcare offers affordable home blood test service in Virar & Mumbai with accurate reporting and hygienic sample collection.</p>
+            <!-- Category Filter Controls -->
+            <div class="flex flex-wrap justify-center gap-3 mt-6">
+                <button onclick="filterPackages('all')" class="pkg-filter-btn px-5 py-2.5 rounded-xl text-sm font-semibold neu-btn active-tab">All Packages</button>
+                <button onclick="filterPackages('full-body')" class="pkg-filter-btn px-5 py-2.5 rounded-xl text-sm font-semibold neu-btn">Full Body</button>
+                <button onclick="filterPackages('vital-organs')" class="pkg-filter-btn px-5 py-2.5 rounded-xl text-sm font-semibold neu-btn">Vital Organs</button>
+                <button onclick="filterPackages('specialty')" class="pkg-filter-btn px-5 py-2.5 rounded-xl text-sm font-semibold neu-btn">Specialty Tests</button>
+            </div>
+        </div>
+
+        <!-- Render Dynamic Lab Packages -->
+        <div id="packages-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic Injection will happen here -->
+        </div>
+    </section>
+
+    <!-- 5. HEALTHCARE & NUTRITION STORE SECTION -->
+    <section id="store" class="max-w-7xl mx-auto px-6 py-16 bg-[#e9eff6] rounded-[40px] shadow-inner reveal">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800">Lipru Nutrition & Wellness Store</h2>
+                <p class="text-slate-500 mt-2">100% genuine dietary supplements, protein, and micro-nutrients.</p>
             </div>
             
-            <div class="why-card neu-flat">
-                <i class="fa-solid fa-headset"></i>
-                <h3>Support, On Time</h3>
-                <p>In blood test services, timely support is very important to help people get the right assistance. Lipru Healthcare makes on-time support easy, fast, and effective.</p>
+            <!-- Store Category Filter Switches -->
+            <div class="flex flex-wrap gap-2">
+                <button onclick="filterStore('all')" class="store-filter-btn px-4 py-2 text-xs font-semibold rounded-xl neu-btn active-tab">All Products</button>
+                <button onclick="filterStore('proteins')" class="store-filter-btn px-4 py-2 text-xs font-semibold rounded-xl neu-btn">Proteins</button>
+                <button onclick="filterStore('vitamins')" class="store-filter-btn px-4 py-2 text-xs font-semibold rounded-xl neu-btn">Vitamins</button>
+                <button onclick="filterStore('organics')" class="store-filter-btn px-4 py-2 text-xs font-semibold rounded-xl neu-btn">Organic Herbs</button>
             </div>
-            
-            <div class="why-card neu-flat">
-                <i class="fa-solid fa-handshake-angle"></i>
-                <h3>Trusted Health Partner</h3>
-                <p>At Lipru Healthcare, customers come first. We offer honest, trusted services and associate only with partners you can rely on.</p>
-            </div>
-            
-            <div class="why-card neu-flat">
-                <i class="fa-solid fa-medal"></i>
-                <h3>Committed to Quality</h3>
-                <p>For Lipru Healthcare, quality isn’t a promise… it’s a responsibility we follow every single day.</p>
-            </div>
+        </div>
 
+        <!-- Working E-commerce Grid -->
+        <div id="store-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Dynamic Supplement Cards will be injected here -->
         </div>
     </section>
 
-    <!-- EXACT 5 FEATURED SERVICES -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Our Core Services</h2>
-            <p>Comprehensive healthcare solutions under one roof.</p>
-        </div>
-        <div class="grid-services">
-            <a href="blood-tests.html" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-droplet" style="color: #ef4444; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Blood Tests</h3>
-            </a>
-            <a href="packages.html" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-file-medical" style="color: #3b82f6; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Health Profiles</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-x-ray" style="color: #6366f1; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Imaging</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-leaf" style="color: #10b981; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Nutrition</h3>
-            </a>
-            <a href="#" style="text-decoration: none;" class="feature-card neu-flat">
-                <i class="fa-solid fa-pills" style="color: #f59e0b; font-size: 35px;"></i>
-                <h3 style="margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--text-main);">Healthcare Store</h3>
-            </a>
-        </div>
-    </section>
-
-    <!-- POPULAR PACKAGES -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Trending Health Packages</h2>
-            <p>Our most booked full body checkups.</p>
-        </div>
-        <div class="grid-layout" id="packages-preview">
-            <!-- Injected via JS -->
-        </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>How It Works</h2>
-            <p>Your health journey in 4 simple steps</p>
-        </div>
-        <div class="steps-wrapper neu-pressed" style="padding: 40px 20px; border-radius: 30px;">
-            <div class="step">
-                <div class="step-num">1</div>
-                <i class="fa-solid fa-mobile-screen" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Book Appointment</h4>
+    <!-- 6. DYNAMIC CART DRAWER -->
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#eef2f7] shadow-2xl z-50 p-6 flex flex-col justify-between cart-drawer border-l border-white">
+        <div>
+            <!-- Header of Drawer -->
+            <div class="flex justify-between items-center border-b border-slate-300 pb-4">
+                <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-blue-600"></i> Shopping Bag
+                </h3>
+                <button onclick="toggleCart()" class="w-10 h-10 rounded-full flex items-center justify-center neu-btn text-slate-600 hover:text-red-500">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <i class="fa-solid fa-house-chimney-medical" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Technician Visits</h4>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <i class="fa-solid fa-vial" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Sample Collection</h4>
-            </div>
-            <div class="step">
-                <div class="step-num">4</div>
-                <i class="fa-solid fa-file-waveform" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h4>Digital Report</h4>
-            </div>
-        </div>
-    </section>
 
-    <!-- PATIENT TESTIMONIALS -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>What Our Patients Say</h2>
-            <p>Trusted by families across Virar & Mumbai</p>
-        </div>
-        <div class="grid-layout">
-            <div class="review-card neu-flat">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"Very professional service! The phlebotomist arrived right on time and the collection was completely painless. Got my reports the same evening."</p>
-                <div class="reviewer">- Anjali Sharma, Virar</div>
-            </div>
-            <div class="review-card neu-flat">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"Booked a Full Body Profile for my parents. Highly impressed with their hygienic approach and affordable pricing. Highly recommended."</p>
-                <div class="reviewer">- Rohit M., Mumbai</div>
-            </div>
-            <div class="review-card neu-flat">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"The WhatsApp booking makes it so easy. Didn't have to leave my home, and the NABL certified reports gave me total peace of mind."</p>
-                <div class="reviewer">- Priya Desai, Vasai</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PARTNER LABS & SERVICE AREAS -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Our Trusted Partner Labs</h2>
-            <p>We process your samples only at NABL & CAP certified laboratories.</p>
-        </div>
-        <div class="partner-logos">
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-microscope" style="color: var(--primary)"></i> Thyrocare</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-flask" style="color: var(--primary)"></i> Metropolis</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-vials" style="color: var(--primary)"></i> SRL Labs</div>
-            <div class="partner-logo neu-flat"><i class="fa-solid fa-dna" style="color: var(--primary)"></i> Lal PathLabs</div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 50px;">
-            <h3 style="font-size: 24px; color: var(--primary); font-weight: 700;">Our Service Areas</h3>
-            <div class="area-tags">
-                <span class="area-tag neu-flat">Virar</span>
-                <span class="area-tag neu-flat">Mumbai</span>
-                <span class="area-tag neu-flat">Delhi</span>
-                <span class="area-tag neu-flat">Pune</span>
-                <span class="area-tag neu-flat">Nagpur</span>
-                <span class="area-tag neu-flat">Hyderabad</span>
-                <span class="area-tag neu-flat">Bengaluru</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- HEALTH STATISTICS -->
-    <section class="container reveal">
-        <div class="stats-grid neu-flat">
-            <div class="stat-item"><h3 class="counter" data-target="50000">0</h3><p>Happy Customers</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>Blood Tests</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="500">0</h3><p>Certified Techs</p></div>
-            <div class="stat-item"><h3>24 Hrs</h3><p>Report Delivery</p></div>
-        </div>
-    </section>
-
-    <!-- FAQ SECTION -->
-    <section class="container reveal">
-        <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-        </div>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <details class="neu-flat">
-                <summary>Is home sample collection safe? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>Yes, our certified phlebotomists follow strict WHO hygiene protocols, use single-use sterile kits, and ensure complete safety during the home visit.</p>
-            </details>
-            <details class="neu-flat">
-                <summary>When will I receive my reports? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>Most standard blood test reports are delivered digitally via WhatsApp and Email within 24 hours of sample collection.</p>
-            </details>
-            <details class="neu-flat">
-                <summary>Do I need to fast before the test? <i class="fa-solid fa-plus text-primary"></i></summary>
-                <p>It depends on the test you select. Profiles like Diabetes or Lipid usually require 8-10 hours of fasting. Our team will guide you upon booking.</p>
-            </details>
-        </div>
-    </section>
-
-    <!-- FINAL CTA BANNER -->
-    <section class="container reveal" style="padding: 20px 0;">
-        <div class="cta-banner">
-            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;">Take Charge of Your Health Today!</h2>
-            <p style="font-size: 18px; margin-bottom: 25px; opacity: 0.9;">Join 50,000+ happy patients. Book your home blood test in 60 seconds.</p>
-            <a href="booking.html" class="btn btn-outline" style="background: white; color: var(--primary); font-size: 18px; padding: 15px 35px;">
-                <i class="fa-solid fa-calendar-check"></i> Book Test Now
-            </a>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h3 style="color: #63b3ed; font-size: 24px; margin-bottom: 15px;"><i class="fa-solid fa-heart-pulse"></i> Lipru Healthcare</h3>
-                    <p style="color: #a0aec0; max-width: 300px;">Smart Health, Saved Wealth. Reliable home blood tests across India. Trusted Since 2017.</p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 15px;">Explore</h4>
-                    <p><a href="index.html" style="color: #a0aec0; text-decoration: none;">Home</a></p>
-                    <p><a href="about.html" style="color: #a0aec0; text-decoration: none;">About Us</a></p>
-                    <p><a href="javascript:void(0)" style="color: #a0aec0; text-decoration: none; cursor: default;">Our Services</a></p>
-                    <p><a href="packages.html" style="color: #a0aec0; text-decoration: none;">Pricing & Packages</a></p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 15px;">Contact Info</h4>
-                    <p style="color: #a0aec0;"><i class="fa-solid fa-phone"></i> +91 8149335679</p>
-                    <p style="color: #a0aec0;"><i class="fa-solid fa-envelope"></i> ipruhealthcare@gmail.com</p>
-                    <a href="booking.html" class="btn btn-primary" style="margin-top: 15px; padding: 8px 15px; font-size: 14px;">Book Appointment Now</a>
+            <!-- Cart Dynamic Items Wrapper -->
+            <div id="cart-items" class="mt-6 flex flex-col gap-4 overflow-y-auto max-h-[60vh] pr-1">
+                <!-- If Cart is Empty -->
+                <div id="empty-cart-view" class="text-center py-12 flex flex-col items-center justify-center space-y-3">
+                    <i class="fa-solid fa-basket-shopping text-5xl text-slate-400"></i>
+                    <p class="text-slate-500 font-medium">Your cart is feeling very light!</p>
                 </div>
             </div>
-            <div style="text-align: center; color: #718096; border-top: 1px solid #4a5568; padding-top: 20px;">
-                Copyright © 2026 Lipru Healthcare. All rights reserved.
+        </div>
+
+        <!-- Checkout / Billing Area -->
+        <div class="border-t border-slate-300 pt-6 space-y-4">
+            <div class="flex justify-between text-slate-600 text-sm">
+                <span>Subtotal Price:</span>
+                <span id="subtotal-amount" class="font-bold">₹0</span>
+            </div>
+            <div class="flex justify-between text-slate-600 text-sm">
+                <span>GST (5% Included):</span>
+                <span id="tax-amount" class="font-bold">₹0</span>
+            </div>
+            <div class="flex justify-between text-slate-800 text-base font-bold">
+                <span>Final Payable Amount:</span>
+                <span id="final-total" class="text-blue-600 text-xl font-extrabold">₹0</span>
+            </div>
+            
+            <button onclick="initiateCheckout()" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition flex items-center justify-center gap-2 shadow-lg">
+                <i class="fa-solid fa-circle-check"></i> Complete Secure Order
+            </button>
+        </div>
+    </div>
+
+    <!-- 7. BACKDROP FOR OVERLAYS -->
+    <div id="overlay-backdrop" onclick="closeAllModals()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 hidden"></div>
+
+    <!-- 8. UNIVERSAL SUCCESS MODAL -->
+    <div id="success-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#eef2f7] p-8 rounded-[30px] shadow-2xl z-50 text-center w-11/12 max-w-sm hidden border border-white">
+        <div class="w-20 h-20 bg-emerald-500 text-white rounded-full flex items-center justify-center text-4xl mx-auto mb-4 animate-bounce">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 id="modal-title" class="text-2xl font-bold text-slate-800">Order Placed Successfully!</h3>
+        <p id="modal-msg" class="text-slate-500 text-sm mt-2">Bhai, aapka custom healthcare product processing pipeline me ja chuka hai.</p>
+        <button onclick="closeSuccessModal()" class="mt-6 w-full py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Awesome!</button>
+    </div>
+
+    <!-- 9. FOOTER SECTION -->
+    <footer class="mt-20 border-t border-slate-300/50 bg-[#e3eaf3] py-12 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4">
+                <span class="text-lg font-extrabold text-slate-800">Lipru <span class="text-blue-600">Healthcare</span></span>
+                <p class="text-xs text-slate-500">Premium health supplements, lifestyle care profiles, and verified clinical diagnostic support. Trusted brand across Virar and Mumbai region.</p>
+                <p class="text-xs text-slate-400 font-semibold">© 2026 Lipru Healthcare. Registered Trademark India.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-700 mb-4 text-sm">Services</h4>
+                <ul class="space-y-2 text-xs text-slate-500">
+                    <li><a href="#" class="hover:text-blue-600">Blood Diagnostics</a></li>
+                    <li><a href="#" class="hover:text-blue-600">Nutrition Supplements Store</a></li>
+                    <li><a href="#" class="hover:text-blue-600">Keto Diet Consultation</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-700 mb-4 text-sm">Quick Links</h4>
+                <ul class="space-y-2 text-xs text-slate-500">
+                    <li><a href="#" class="hover:text-blue-600">Help Center / FAQs</a></li>
+                    <li><a href="#" class="hover:text-blue-600">Quality Certificate</a></li>
+                    <li><a href="#" class="hover:text-blue-600">Privacy & Terms Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-700 mb-4 text-sm">Stay Updated</h4>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="Enter Email" class="w-full px-4 py-2 text-xs rounded-xl neu-inset-input text-slate-700">
+                    <button onclick="triggerNewsletter()" class="px-3 bg-blue-600 text-white rounded-xl text-xs"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/918149335679" style="position: fixed; bottom: 30px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1000; text-decoration: none;" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-
-    <!-- JAVASCRIPT ENGINE -->
+    <!-- ======================================================= -->
+    <!--                  JAVASCRIPT ENGINE                      -->
+    <!-- ======================================================= -->
     <script>
-        // 1. Desktop Dropdown Click Logic (Replaces Hover)
-        function toggleDesktopDropdown(event) {
-            event.stopPropagation(); // Prevents click from closing immediately
-            const dropdown = document.getElementById('desktop-dropdown');
-            dropdown.classList.toggle('show');
+        // Global Datastores
+        const packages = [
+            { id: 'pkg1', category: 'full-body', title: 'Basic Fit Health Check', params: '58 Parameters Included', price: 899, oldPrice: 1599, label: 'Popular Choice', description: 'Complete Blood Count, Thyroid profile, Liver Panel, Kidney check & Diabetes indicators.' },
+            { id: 'pkg2', category: 'vital-organs', title: 'Advanced Heart & Kidney Profile', params: '68 Parameters Included', price: 1699, oldPrice: 2999, label: 'Doctor Recommended', description: 'Comprehensive Cardiac Health screen, Lipids, Uric Acid, Creatinine, Electrolytes & Bone Vit D.' },
+            { id: 'pkg3', category: 'specialty', title: 'Lipru Keto-Fit Metabolic Panel', params: '45 Parameters Included', price: 1999, oldPrice: 3499, label: 'Specialty Care', description: 'For keto adaptors, tracks BHB levels, blood glucose patterns, custom lipid particles & liver strain.' },
+            { id: 'pkg4', category: 'full-body', title: 'Platinum Comprehensive Screening', params: '90 Parameters Included', price: 2999, oldPrice: 5999, label: 'Premium Wellness', description: 'Includes Vitamins B12 & D, complete iron profiling, active urine check, thyroid, and active minerals.' }
+        ];
+
+        const products = [
+            { id: 'prod1', category: 'proteins', title: 'Lipru Gold 100% Whey Isolate', price: 2899, rating: 4.9, reviews: 142, icon: 'fa-wheat-awn-circle-exclamation', desc: 'Fast absorbing ultra-filtered clean premium protein, 26g isolate per serving.' },
+            { id: 'prod2', category: 'vitamins', title: 'Lipru Active Multi-Vit Complex', price: 699, rating: 4.8, reviews: 89, icon: 'fa-capsules', desc: 'Daily multivitamin pills fortified with Ginseng extract, zinc, and coenzyme Q10.' },
+            { id: 'prod3', category: 'organics', title: 'Organic Matcha Herbal Green Tea', price: 449, rating: 4.6, reviews: 55, icon: 'fa-leaf', desc: 'Pure ceremony grade Japanese Matcha antioxidant-rich green tea for weight balance.' },
+            { id: 'prod4', category: 'proteins', title: 'Premium Plant Vegan Protein Blend', price: 2199, rating: 4.7, reviews: 104, icon: 'fa-seedling', desc: 'Pea & brown rice hybrid organic protein, naturally sweetened with Stevia.' },
+            { id: 'prod5', category: 'vitamins', title: 'High Potency Omega-3 Triple Strength', price: 899, rating: 4.9, reviews: 120, icon: 'fa-fish', desc: 'Clean fish oil concentrate with 1000mg active EPA/DHA for brain, joints, and eye support.' },
+            { id: 'prod6', category: 'organics', title: 'Natural Ashwagandha Root Extract', price: 549, rating: 4.8, reviews: 76, icon: 'fa-cubes', desc: 'KSM-66 standardized clinical ashwagandha formula to lower cortisol and anxiety levels.' }
+        ];
+
+        let cart = [];
+
+        // Dynamic Lab Packages Rendering
+        function renderPackages(data) {
+            const container = document.getElementById('packages-preview');
+            container.innerHTML = '';
+            
+            data.forEach(pkg => {
+                container.innerHTML += `
+                    <div class="p-6 neu-flat flex flex-col justify-between h-full relative overflow-hidden">
+                        ${pkg.label ? `<span class="absolute top-4 right-4 bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full font-bold">${pkg.label}</span>` : ''}
+                        <div class="space-y-4 mt-2">
+                            <div class="w-12 h-12 rounded-2xl neu-pressed flex items-center justify-center text-blue-600 text-xl">
+                                <i class="fa-solid fa-vial"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">${pkg.title}</h3>
+                                <span class="text-xs text-blue-500 font-semibold block mt-1"><i class="fa-solid fa-list"></i> ${pkg.params}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">${pkg.description}</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-300/50 flex items-center justify-between">
+                            <div>
+                                <div class="text-2xl font-black text-slate-800">₹${pkg.price}</div>
+                                <div class="text-xs text-slate-400 line-through">₹${pkg.oldPrice}</div>
+                            </div>
+                            <button onclick="bookLabTest('${pkg.id}')" class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-lg flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check"></i> Book Sample Run
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
-        // Close dropdown if user clicks outside anywhere on the screen
-        window.onclick = function(event) {
-            if (!event.target.closest('.dropdown')) {
-                const dropdown = document.getElementById('desktop-dropdown');
-                if (dropdown && dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
+        // Dynamic Product Store Cards Rendering
+        function renderStore(data) {
+            const grid = document.getElementById('store-grid');
+            grid.innerHTML = '';
+            
+            data.forEach(prod => {
+                grid.innerHTML += `
+                    <div class="product-card p-5 neu-flat flex flex-col justify-between h-full" data-title="${prod.title.toLowerCase()}" data-category="${prod.category}">
+                        <div class="space-y-4">
+                            <!-- Graphical Placeholder Card -->
+                            <div class="w-full h-44 rounded-2xl neu-pressed flex flex-col items-center justify-center text-blue-600 text-5xl relative">
+                                <i class="fa-solid ${prod.icon}"></i>
+                                <span class="absolute bottom-3 right-3 text-[10px] text-slate-400 font-bold bg-[#eef2f7] px-2 py-0.5 rounded-full shadow">Lipru Lab</span>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center gap-1.5 text-orange-500 text-xs">
+                                    <i class="fa-solid fa-star"></i> <span class="font-bold text-slate-700">${prod.rating}</span> <span class="text-slate-400">(${prod.reviews} reviews)</span>
+                                </div>
+                                <h3 class="text-base font-bold text-slate-800 mt-1">${prod.title}</h3>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">${prod.desc}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-3 border-t border-slate-300/50 flex items-center justify-between">
+                            <span class="text-lg font-black text-slate-800">₹${prod.price}</span>
+                            <button onclick="addToCart('${prod.id}')" class="w-10 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition shadow-lg">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Package Filters logic
+        function filterPackages(category) {
+            const btns = document.querySelectorAll('.pkg-filter-btn');
+            btns.forEach(btn => btn.classList.remove('active-tab'));
+            event.target.classList.add('active-tab');
+
+            if(category === 'all') {
+                renderPackages(packages);
+            } else {
+                const filtered = packages.filter(p => p.category === category);
+                renderPackages(filtered);
+            }
+        }
+
+        // Store Category Filter Logic
+        function filterStore(category) {
+            const btns = document.querySelectorAll('.store-filter-btn');
+            btns.forEach(btn => btn.classList.remove('active-tab'));
+            event.target.classList.add('active-tab');
+
+            if(category === 'all') {
+                renderStore(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderStore(filtered);
+            }
+        }
+
+        // Local Instant Store Search Bar Logic
+        function searchStore() {
+            const query = document.getElementById('store-search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                if(title.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Desktop Dropdown Open/Close
+        function toggleDesktopDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('desktop-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Mobile Main Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.querySelector('#hamburger-icon i');
+            menu.classList.toggle('hidden');
+            
+            if(!menu.classList.contains('hidden')) {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        }
+
+        // Mobile Dropdown
+        function toggleMobileSubmenu(event) {
+            event.stopPropagation();
+            const submenu = document.getElementById('mobile-submenu');
+            const icon = event.currentTarget.querySelector('i');
+            submenu.classList.toggle('hidden');
+            
+            if (!submenu.classList.contains('hidden')) {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        }
+
+        // Smooth Section Scroll
+        function scrollToSection(id) {
+            const elem = document.getElementById(id);
+            if(elem) {
+                elem.scrollIntoView({ behavior: 'smooth' });
+                // Reset active class on navigation tabs
+                const tabs = document.querySelectorAll('nav button');
+                tabs.forEach(tab => tab.classList.remove('active-tab'));
+                
+                const activeTab = document.getElementById(`nav-${id}`);
+                if(activeTab) activeTab.classList.add('active-tab');
+            }
+        }
+
+        // Cart Drawer Mechanics
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('overlay-backdrop');
+            
+            drawer.classList.toggle('open');
+            if(drawer.classList.contains('open')) {
+                backdrop.classList.remove('hidden');
+            } else {
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('cart-drawer').classList.remove('open');
+            document.getElementById('overlay-backdrop').classList.add('hidden');
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        // Shopping Cart Implementation
+        function addToCart(productId) {
+            const item = products.find(p => p.id === productId);
+            if(!item) return;
+
+            const existingItem = cart.find(c => c.id === productId);
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCartUI();
+            
+            // Pop badge animation on icon
+            const badge = document.getElementById('cart-badge');
+            badge.classList.add('animate-ping');
+            setTimeout(() => badge.classList.remove('animate-ping'), 500);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(c => c.id !== productId);
+            updateCartUI();
+        }
+
+        function changeQty(productId, amount) {
+            const item = cart.find(c => c.id === productId);
+            if(!item) return;
+
+            item.quantity += amount;
+            if(item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const cartItemsWrapper = document.getElementById('cart-items');
+            const emptyView = document.getElementById('empty-cart-view');
+            const badge = document.getElementById('cart-badge');
+            
+            cartItemsWrapper.innerHTML = '';
+
+            if(cart.length === 0) {
+                emptyView.classList.remove('hidden');
+                cartItemsWrapper.appendChild(emptyView);
+                badge.classList.add('hidden');
+                
+                document.getElementById('subtotal-amount').innerText = '₹0';
+                document.getElementById('tax-amount').innerText = '₹0';
+                document.getElementById('final-total').innerText = '₹0';
+                return;
+            }
+
+            emptyView.classList.add('hidden');
+            badge.classList.remove('hidden');
+            
+            let totalItems = 0;
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                totalItems += item.quantity;
+                subtotal += (item.price * item.quantity);
+
+                cartItemsWrapper.innerHTML += `
+                    <div class="flex items-center gap-4 p-4 rounded-2xl neu-flat relative">
+                        <div class="w-14 h-14 rounded-xl neu-pressed flex items-center justify-center text-blue-600 text-2xl">
+                            <i class="fa-solid ${item.icon}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-slate-800 line-clamp-1">${item.title}</h4>
+                            <p class="text-xs text-blue-600 font-semibold mt-1">₹${item.price} each</p>
+                            
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 rounded bg-slate-200 hover:bg-slate-300 text-xs flex items-center justify-center font-bold">-</button>
+                                <span class="text-xs font-bold text-slate-700">${item.quantity}</span>
+                                <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 rounded bg-slate-200 hover:bg-slate-300 text-xs flex items-center justify-center font-bold">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="absolute top-4 right-4 text-slate-400 hover:text-red-500">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            badge.innerText = totalItems;
+            
+            const tax = Math.round(subtotal * 0.05);
+            const total = subtotal + tax;
+
+            document.getElementById('subtotal-amount').innerText = `₹${subtotal}`;
+            document.getElementById('tax-amount').innerText = `₹${tax}`;
+            document.getElementById('final-total').innerText = `₹${total}`;
+        }
+
+        // Checkout Trigger
+        function initiateCheckout() {
+            if(cart.length === 0) {
+                alert("Bhai, checkout karne ke liye cart me koi healthcare product toh add karo!");
+                return;
+            }
+            
+            // Show Success Dialog
+            document.getElementById('modal-title').innerText = "Order Placed Successfully!";
+            document.getElementById('modal-msg').innerText = "Bhai, aapka order secure node ke through receive ho gaya hai. Aapke registered mobile par bill invoice trigger kar diya hai!";
+            
+            document.getElementById('success-modal').classList.remove('hidden');
+            document.getElementById('overlay-backdrop').classList.remove('hidden');
+            
+            // Flush state
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // Booking Lab Dialog Trigger
+        function bookLabTest(id) {
+            const pkg = packages.find(p => p.id === id);
+            if(!pkg) return;
+
+            document.getElementById('modal-title').innerText = "Lab Slot Registered!";
+            document.getElementById('modal-msg').innerText = `Aapka ${pkg.title} schedule ho gaya hai. Humare local phlebotomist (sample collector) aapse confirm karne jald hi contact karenge!`;
+            
+            document.getElementById('success-modal').classList.remove('hidden');
+            document.getElementById('overlay-backdrop').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.getElementById('overlay-backdrop').classList.add('hidden');
+        }
+
+        function triggerNewsletter() {
+            alert("Bhai! Aapka wellness list newsletter alert successful activate ho chuka hai.");
+        }
+
+        // Scroll Reveal System logic
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                let windowHeight = window.innerHeight;
+                let elementTop = reveals[i].getBoundingClientRect().top;
+                let elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
                 }
             }
         }
 
-        // 2. Mobile Menu Toggle Logic
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.querySelector('#hamburger-icon i');
-            menu.classList.toggle('active');
+        // Number Counter Animation Engine
+        function runCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 150;
             
-            if(menu.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-                document.getElementById('mobile-submenu').classList.remove('active');
-            }
+            let counted = false;
+            window.addEventListener('scroll', () => {
+                const statsSection = document.querySelector('.stats-grid');
+                if (!statsSection) return;
+                
+                const sectionPosition = statsSection.getBoundingClientRect().top;
+                if (sectionPosition < window.innerHeight && !counted) {
+                    counters.forEach(counter => {
+                        const updateCount = () => {
+                            const target = +counter.getAttribute('data-target');
+                            const count = +counter.innerText;
+                            const inc = target / speed;
+                            
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 12);
+                            } else {
+                                counter.innerText = target + "+";
+                            }
+                        };
+                        updateCount();
+                    });
+                    counted = true;
+                }
+            });
         }
 
-        // 2.1 Mobile Submenu Accordion
-        function toggleMobileSubmenu(event) {
-            event.stopPropagation();
-            document.getElementById('mobile-submenu').classList.toggle('active');
-        }
-
-        // 3. Package Data Injection
-        const topPackages = [
-            { name: "Full Body Profile Basic", tests: "CBC, Sugar, Thyroid, Liver, Kidney", price: 1599, oldPrice: 2500, tag: "36% OFF" },
-            { name: "Executive Checkup", tests: "360° checkup & Vital Organs", price: 1999, oldPrice: 3500, tag: "Most Booked" },
-            { name: "Diabetes Care Basic", tests: "Sugar control & Insulin response", price: 1099, oldPrice: 1500, tag: "Essential" }
-        ];
-
-        document.getElementById('packages-preview').innerHTML = topPackages.map(p => `
-            <div class="card neu-flat">
-                <span class="card-tag">${p.tag}</span>
-                <h3>${p.name}</h3>
-                <p><i class="fa-solid fa-list-check text-primary"></i> ${p.tests}</p>
-                <div class="price-box">
-                    <span class="price">₹${p.price}</span>
-                    <span class="old-price">₹${p.oldPrice}</span>
-                </div>
-                <a href="booking.html" class="btn btn-primary" style="width:100%">Book Package</a>
-            </div>
-        `).join('');
-
-        // 4. Scroll Reveal Animation
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal();
-
-        // 5. Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        let animated = false;
-        window.addEventListener("scroll", () => {
-            if(animated) return;
-            const statsSection = document.querySelector('.stats-grid');
-            if(statsSection && statsSection.getBoundingClientRect().top < window.innerHeight) {
-                counters.forEach(counter => {
-                    const updateCount = () => {
-                        const target = +counter.getAttribute('data-target');
-                        const count = +counter.innerText;
-                        const inc = target / 100;
-                        if(count < target) { counter.innerText = Math.ceil(count + inc); setTimeout(updateCount, 20); }
-                        else { counter.innerText = target + "+"; }
-                    };
-                    updateCount();
-                });
-                animated = true;
+        // Global Event Listeners for Dropdown Closure
+        window.addEventListener('click', function(event) {
+            if (!event.target.closest('.relative')) {
+                document.getElementById('desktop-dropdown').classList.add('hidden');
             }
         });
 
-        // 6. 3D Particles Background Logic
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 5 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if(this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-                if(this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(0, 86, 179, 0.15)'; 
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
-        }
-        function init() { for(let i=0; i<60; i++){ particlesArray.push(new Particle()); } }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for(let i=0; i<particlesArray.length; i++){
-                particlesArray[i].update(); particlesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
-        init(); animate();
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPackages(packages);
+            renderStore(products);
+            runCounters();
+            window.addEventListener('scroll', reveal);
+            reveal(); // Initial call
         });
     </script>
 </body>
