@@ -1,233 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Imaging Services | Lipru Healthcare</title>
+    <title>Lipru Imaging & Diagnostic Center</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1E3A8A', 
-                        secondary: '#3B82F6', 
-                        accent: '#10B981', 
+                        primary: '#1e3a8a',    /* Deep Navy Blue */
+                        secondary: '#0ea5e9',  /* Premium Sky Blue */
+                        accent: '#f0f9ff'      /* Soft Blue Tint */
                     }
                 }
             }
         }
     </script>
+    <!-- FontAwesome Icons for modern UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md fixed w-full z-50 top-0">
+    <!-- 1. HEADER / NAVBAR -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <a href="#" class="flex items-center gap-2">
-                        <i class="fa-solid fa-heart-pulse text-3xl text-primary"></i>
-                        <span class="font-bold text-2xl text-primary">Lipru Healthcare</span>
-                    </a>
+            <div class="flex justify-between items-center h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-primary text-white p-2.5 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight text-primary block leading-none">LIPRU</span>
+                        <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Imaging & Diagnostics</span>
+                    </div>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-gray-600 hover:text-secondary font-medium">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-secondary font-medium">About</a>
-                    <a href="#" class="text-secondary font-bold border-b-2 border-secondary">Imaging</a>
-                    <a href="#book" class="bg-primary hover:bg-blue-800 text-white px-6 py-2 rounded-full font-medium transition duration-300">Book Scan</a>
-                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#hero" class="text-sm font-semibold text-slate-600 hover:text-primary transition">Home</a>
+                    <a href="#services" class="text-sm font-semibold text-slate-600 hover:text-primary transition">Services</a>
+                    <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-primary transition">Why Choose Us</a>
+                    <a href="#faq" class="text-sm font-semibold text-slate-600 hover:text-primary transition">FAQs</a>
+                    <a href="#book" class="bg-primary hover:bg-blue-800 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition">Book Appointment</a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="menu-btn" class="md:hidden text-slate-700 hover:text-primary focus:outline-none p-2" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                </button>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <header class="mt-20 bg-primary text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">Advanced Diagnostic Imaging</h1>
-            <p class="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto mb-10">
-                State-of-the-art technology aur expert radiologists ke sath, hum accurate aur fast imaging services provide karte hain. Aapki health hamari priority hai.
-            </p>
-            <a href="#services" class="bg-white text-primary px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg">
-                Explore Services <i class="fa-solid fa-arrow-down ml-2"></i>
-            </a>
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-inner">
+            <div class="px-4 pt-2 pb-6 space-y-3">
+                <a href="#hero" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">Home</a>
+                <a href="#services" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">Services</a>
+                <a href="#about" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">Why Choose Us</a>
+                <a href="#faq" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">FAQs</a>
+                <a href="#book" class="block text-center bg-primary text-white py-3 rounded-lg text-base font-bold shadow-md hover:bg-blue-800 transition mt-4">Book Appointment</a>
+            </div>
         </div>
     </header>
 
-    <!-- Imaging Services Grid (Fixed Alignment) -->
-    <section id="services" class="py-20">
+    <!-- PUSH BODY CONTENT DOWN (Navbar Height Fix) -->
+    <div class="pt-20"></div>
+
+    <!-- 2. HERO SECTION -->
+    <section id="hero" class="relative bg-gradient-to-br from-accent via-white to-slate-50 py-16 md:py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-primary">
+                        <i class="fa-solid fa-shield-halved mr-1.5"></i> NABH Accredited Diagnostic Center
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+                        Accurate Diagnostics, <br class="hidden sm:inline">
+                        <span class="text-primary">Better Treatment.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 max-w-lg mx-auto lg:mx-0">
+                        Hamare advanced high-precision systems aur expert radiologists ke sath payein sabse accurate aur fast diagnostic reports. Lipru Diagnostics par aapka swasthya hamari priority hai.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="#book" class="bg-primary hover:bg-blue-800 text-white px-8 py-4 rounded-xl text-md font-extrabold shadow-lg hover:shadow-xl transition-all text-center">
+                            Book Scan Online
+                        </a>
+                        <a href="#services" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-4 rounded-xl text-md font-bold text-center transition-all">
+                            Our Scan Services
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right Image/Feature Panel -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-secondary/10 rounded-3xl blur-3xl -z-10 transform scale-95"></div>
+                    <div class="bg-white p-4 rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                        <!-- Simulated Modern MRI / Clinical Setup Render -->
+                        <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRzFd-b-aZvGLnO1i_VgfMHOzjDQ83q8Y58ur-H8hYJxT3Pqp8WtGyfc9UB8nN_DZrx0dxWgpV1n3OstDo" alt="State-of-the-art diagnostics scanner" class="rounded-2xl w-full object-cover h-80 sm:h-[400px]">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SERVICES SECTION -->
+    <section id="services" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900">Our Imaging Modalities</h2>
-                <div class="h-1 w-20 bg-secondary mx-auto mt-4 rounded"></div>
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Humari Diagnostic Services</h2>
+                <div class="w-20 h-1.5 bg-secondary mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-600 mt-4 text-md">
+                    Advanced machinery aur precise methodologies ka use karke hum specialized imaging aur scanning services provide karte hain.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- MRI Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:-translate-y-2 transition duration-300 border-t-4 border-primary flex flex-col h-full">
-                    <div class="bg-blue-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-magnet text-4xl text-primary"></i>
+            <!-- Services Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-secondary hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-xl text-2xl mb-6">
+                        <i class="fa-solid fa-dna"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">MRI Scan</h3>
-                    <p class="text-gray-600 mb-6 text-sm flex-grow">High-resolution 3T MRI for brain, spine, and joint imaging with maximum patient comfort.</p>
-                    <a href="#book" class="text-secondary font-semibold hover:text-primary mt-auto">Book Now &rarr;</a>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">High-Tesla MRI</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Accurate high-resolution neurological, musculoskeletal, aur abdominal organ imaging scan safely perform kiya jata hai.
+                    </p>
                 </div>
 
-                <!-- CT Scan Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:-translate-y-2 transition duration-300 border-t-4 border-secondary flex flex-col h-full">
-                    <div class="bg-blue-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-circle-notch text-4xl text-secondary"></i>
+                <!-- Service Card 2 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-secondary hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-xl text-2xl mb-6">
+                        <i class="fa-solid fa-circle-nodes"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">CT Scan</h3>
-                    <p class="text-gray-600 mb-6 text-sm flex-grow">Low-dose, ultra-fast multi-slice CT scanning for accurate internal body imaging.</p>
-                    <a href="#book" class="text-secondary font-semibold hover:text-primary mt-auto">Book Now &rarr;</a>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Ultra-Fast CT Scan</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Minimal radiation scan procedure se clear aur detail-oriented cross-sectional body parts visualizations pane ke liye.
+                    </p>
                 </div>
 
-                <!-- X-Ray Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:-translate-y-2 transition duration-300 border-t-4 border-accent flex flex-col h-full">
-                    <div class="bg-green-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-x-ray text-4xl text-accent"></i>
+                <!-- Service Card 3 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-secondary hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-xl text-2xl mb-6">
+                        <i class="fa-solid fa-radiation"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Digital X-Ray</h3>
-                    <p class="text-gray-600 mb-6 text-sm flex-grow">Instant digital radiography with minimal radiation exposure for bone and chest analysis.</p>
-                    <a href="#book" class="text-secondary font-semibold hover:text-primary mt-auto">Book Now &rarr;</a>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Digital X-Ray</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Instant reporting panels ke sath low-dosage safety-compliant digital X-Ray technology chest aur fractures detection ke liye.
+                    </p>
                 </div>
 
-                <!-- Ultrasound Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:-translate-y-2 transition duration-300 border-t-4 border-purple-500 flex flex-col h-full">
-                    <div class="bg-purple-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-wave-square text-4xl text-purple-500"></i>
+                <!-- Service Card 4 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-secondary hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-xl text-2xl mb-6">
+                        <i class="fa-solid fa-wave-square"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Ultrasound</h3>
-                    <p class="text-gray-600 mb-6 text-sm flex-grow">Advanced 3D/4D ultrasound for obstetrics, abdomen, and pelvis diagnostics.</p>
-                    <a href="#book" class="text-secondary font-semibold hover:text-primary mt-auto">Book Now &rarr;</a>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Color Doppler Ultrasound</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        High-definition sonography aur real-time abdominal, pelvic scans aur vascular blood flows track karne ke liye system.
+                    </p>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-secondary hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-xl text-2xl mb-6">
+                        <i class="fa-solid fa-vial-virus"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Pathology / Blood Tests</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Complete blood test setups, hematology, immunology panels aur specialized biochemistry reports, direct integration se verified.
+                    </p>
+                </div>
+
+                <!-- Call To Action Service Card -->
+                <div class="bg-gradient-to-br from-primary to-blue-900 p-8 rounded-2xl text-white flex flex-col justify-between shadow-lg">
+                    <div>
+                        <h3 class="text-2xl font-black mb-3">Health Packages</h3>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Full-body checkup packages standard discounts ke sath available hain. Aaj hi appointment schedule karein.
+                        </p>
+                    </div>
+                    <a href="#book" class="mt-8 bg-white text-primary text-center py-3 rounded-xl font-bold hover:bg-slate-50 transition">
+                        View Packages
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us -->
-    <section class="bg-blue-50 py-16">
+    <!-- 4. WHY CHOOSE US / ABOUT -->
+    <section id="about" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Image Visual -->
+                <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white p-4">
+                    <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRzFd-b-aZvGLnO1i_VgfMHOzjDQ83q8Y58ur-H8hYJxT3Pqp8WtGyfc9UB8nN_DZrx0dxWgpV1n3OstDo" alt="Clinic Interior and Advanced MRI System Setup" class="w-full h-80 lg:h-[450px] object-cover rounded-xl">
+                </div>
+
+                <!-- Right Copy & Trust Factors -->
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Hamara Commitment, Aapki Accurate Report</h2>
+                        <div class="w-16 h-1.5 bg-secondary mt-3 rounded-full"></div>
+                    </div>
+                    <p class="text-slate-600 text-md leading-relaxed">
+                        Lipru Diagnostics me hum standard workflows maintain karte hain jisse scan errors zero ho jayein aur patient diagnostic procedure hamesha painless aur secure ho.
+                    </p>
+
+                    <!-- Trust Points Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-100 text-primary p-2 rounded-lg mt-1"><i class="fa-solid fa-circle-check text-md"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Highly Certified</h4>
+                                <p class="text-slate-500 text-xs mt-0.5">Sare reports verified NABL pathlabs aur MD doctors se approved hain.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-100 text-primary p-2 rounded-lg mt-1"><i class="fa-solid fa-clock text-md"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Same-Day Reports</h4>
+                                <p class="text-slate-500 text-xs mt-0.5">Standard critical diagnostic reports online portals par 24 Hours ke andar deliver.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-100 text-primary p-2 rounded-lg mt-1"><i class="fa-solid fa-microscope text-md"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Top-Tier Tech</h4>
+                                <p class="text-slate-500 text-xs mt-0.5">High Tesla MRI machine setup and ultra-clear sonography equipment.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-100 text-primary p-2 rounded-lg mt-1"><i class="fa-solid fa-user-doctor text-md"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Experienced Radiologists</h4>
+                                <p class="text-slate-500 text-xs mt-0.5">Doctor panels 15+ years experience and accurate clinical feedback panels.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. APPOINTMENT BOOKING SECTION -->
+    <section id="book" class="py-20 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                <!-- Form Header -->
+                <div class="bg-primary p-8 text-white text-center">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Schedule Your Diagnostic Scan</h2>
+                    <p class="text-blue-100 text-sm mt-2">Apni basic details fill karein. Hamari active desk call karke direct slot fix karegi.</p>
+                </div>
+
+                <!-- Booking Form Content -->
+                <div class="p-8 sm:p-12">
+                    <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Name Field -->
+                            <div>
+                                <label for="fullname" class="block text-sm font-semibold text-slate-700 mb-2">Full Name <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-regular fa-user"></i>
+                                    </div>
+                                    <input type="text" id="fullname" name="fullname" required class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition" placeholder="Enter full name">
+                                </div>
+                            </div>
+                            <!-- Phone Field -->
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition" placeholder="10-digit mobile number">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Scan Type Field -->
+                            <div>
+                                <label for="scan_type" class="block text-sm font-semibold text-slate-700 mb-2">Select Scan Type <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-briefcase-medical"></i>
+                                    </div>
+                                    <select id="scan_type" name="scan_type" required class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition bg-white appearance-none">
+                                        <option value="" disabled selected>Select Diagnostic Scan</option>
+                                        <option value="mri">MRI (Magnetic Resonance Imaging)</option>
+                                        <option value="ct-scan">CT Scan</option>
+                                        <option value="x-ray">Digital X-Ray</option>
+                                        <option value="ultrasound">Color Doppler Ultrasound</option>
+                                        <option value="pathology">Blood Test / Pathology</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-chevron-down text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Preferred Date Field -->
+                            <div>
+                                <label for="preferred_date" class="block text-sm font-semibold text-slate-700 mb-2">Preferred Date <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-regular fa-calendar-days"></i>
+                                    </div>
+                                    <input type="date" id="preferred_date" name="preferred_date" required class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition text-slate-700">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prescription File Upload Field -->
+                        <div>
+                            <label for="prescription" class="block text-sm font-semibold text-slate-700 mb-2">Doctor's Prescription (Optional)</label>
+                            <div class="border-2 border-dashed border-slate-200 hover:border-secondary rounded-xl p-4 transition-all duration-300 relative bg-slate-50 flex items-center justify-center">
+                                <input type="file" id="prescription" name="prescription" accept="image/*,application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="text-center space-y-1">
+                                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400"></i>
+                                    <p class="text-sm text-slate-600 font-medium">Click to upload or drag & drop prescription</p>
+                                    <p class="text-xs text-slate-400">Supported formats: PDF, JPEG, PNG (Max 5MB)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-primary hover:bg-blue-800 text-white font-extrabold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-md uppercase tracking-wider flex items-center justify-center space-x-2">
+                            <span>Request Booking Now</span>
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FAQS SECTION (Accordion Implementation) -->
+    <section id="faq" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <div class="w-20 h-1.5 bg-secondary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Accordion Pack -->
+            <div class="space-y-4">
+                <!-- Accordion Item 1 -->
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden transition shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left font-bold text-slate-900 flex justify-between items-center focus:outline-none transition hover:bg-slate-50">
+                        <span>Q1. Mujhe MRI scan se pehle kya precautions lene chahiye?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-50/50">
+                        <p class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                            MRI scanning machine heavy magnetic waves use karti hai. Isliye scan se pehle body par koi bhi metal accessory, jewelry, keys ya cards mat rakhein. Agar aapki body me cardiac pacemaker ya koi surgical steel implant hai, to technicians ko pehle hi bta dein.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden transition shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left font-bold text-slate-900 flex justify-between items-center focus:outline-none transition hover:bg-slate-50">
+                        <span>Q2. Diagnostic report aane me kitna samay lagta hai?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-50/50">
+                        <p class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                            Standard radiology aur pathology reporting ka standard timeframe 12 to 24 hours hota hai. Urgent emergencies me hum instant digital reports online aur offline update kara dete hain.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 3 -->
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden transition shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left font-bold text-slate-900 flex justify-between items-center focus:outline-none transition hover:bg-slate-50">
+                        <span>Q3. Booking request confirm kab hoti hai?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-50/50">
+                        <p class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                            Aapki request receive hote hi hamari clinic help desk 15 to 30 minutes ke andar aapse call par connect karegi aur slots confirmation aur requirements details update karegi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER SECTION -->
+    <footer class="bg-slate-900 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Branding Grid -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3 text-white">
+                        <div class="bg-secondary text-white p-2 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-heart-pulse text-xl"></i>
+                        </div>
+                        <span class="text-xl font-black tracking-wider">LIPRU</span>
+                    </div>
+                    <p class="text-sm text-slate-500">
+                        Accurate diagnosis and state-of-the-art imaging systems in the region. Apne patient experience ko improve karne ke liye digital platforms.
+                    </p>
+                </div>
+
+                <!-- Quick Services links -->
                 <div>
-                    <h2 class="text-3xl font-bold mb-6">Why Choose Lipru Imaging Center?</h2>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check-circle text-accent mt-1"></i>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Same-Day Reports</h4>
-                                <p class="text-gray-600 text-sm">Digital reports delivered directly to your WhatsApp and email.</p>
-                            </div>
+                    <h3 class="text-white font-bold text-md mb-4 uppercase tracking-wider">Our Services</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#services" class="hover:text-white transition">High-Tesla MRI</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Ultra-Fast CT Scan</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Digital Radiography</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Color Sonography</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support links -->
+                <div>
+                    <h3 class="text-white font-bold text-md mb-4 uppercase tracking-wider">Quick Navigation</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#hero" class="hover:text-white transition">Home Page</a></li>
+                        <li><a href="#about" class="hover:text-white transition">Why Choose Us</a></li>
+                        <li><a href="#book" class="hover:text-white transition">Schedule Online</a></li>
+                        <li><a href="#faq" class="hover:text-white transition">Help & FAQs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacts info -->
+                <div>
+                    <h3 class="text-white font-bold text-md mb-4 uppercase tracking-wider">Contact Us</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-secondary"></i>
+                            <span>Virar East, Mumbai, Maharashtra</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check-circle text-accent mt-1"></i>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Expert Radiologists</h4>
-                                <p class="text-gray-600 text-sm">Our team consists of highly experienced and board-certified doctors.</p>
-                            </div>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-secondary"></i>
+                            <span>+91 9876543210</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check-circle text-accent mt-1"></i>
-                            <div>
-                                <h4 class="font-bold text-gray-900">24/7 Emergency Scans</h4>
-                                <p class="text-gray-600 text-sm">Critical imaging services available round the clock.</p>
-                            </div>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-envelope text-secondary"></i>
+                            <span>support@lipruhealthcare.com</span>
                         </li>
                     </ul>
                 </div>
-                <div class="bg-white h-80 rounded-2xl shadow-md flex flex-col items-center justify-center border border-gray-200">
-                    <i class="fa-solid fa-image text-5xl text-gray-300 mb-3"></i>
-                    <span class="text-gray-500 font-medium">Add Clinic Image Here</span>
+            </div>
+
+            <hr class="border-slate-800 my-8">
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-600">
+                <p>&copy; 2026 Lipru Healthcare. All Rights Reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Appointment Booking Form -->
-    <section id="book" class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Book Your Scan</h2>
-                    <p class="text-gray-600">Fill the form below and our team will call you to confirm your slot.</p>
-                </div>
-                
-                <form action="#" method="POST" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition" placeholder="Your Name">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition" placeholder="+91">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Select Scan Type</label>
-                            <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition bg-white">
-                                <option>MRI</option>
-                                <option>CT Scan</option>
-                                <option>X-Ray</option>
-                                <option>Ultrasound</option>
-                                <option>Blood Test / Pathology</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-                            <input type="date" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Doctor's Prescription (Optional)</label>
-                        <input type="file" class="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-primary hover:file:bg-blue-100 transition">
-                    </div>
-
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-4 rounded-lg transition duration-300 shadow-md">
-                        Request Appointment
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer with Placeholders -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-heart-pulse text-secondary"></i> Lipru Healthcare
-                </h3>
-                <p class="text-gray-400 text-sm">Providing advanced diagnostics and exceptional patient care with state-of-the-art imaging technology.</p>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4">Quick Links</h4>
-                <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">About Us</a></li>
-                    <li><a href="#" class="hover:text-white transition">Imaging Modalities</a></li>
-                    <li><a href="#" class="hover:text-white transition">Health Packages</a></li>
-                    <li><a href="#" class="hover:text-white transition">Contact Support</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4">Contact Info</h4>
-                <ul class="space-y-2 text-sm text-gray-400">
-                    <!-- Placeholder contacts -->
-                    <li><i class="fa-solid fa-phone mr-2 text-secondary"></i> [Aapka_Number]</li>
-                    <li><i class="fa-solid fa-envelope mr-2 text-secondary"></i> [Aapka_Email]</li>
-                    <li><i class="fa-solid fa-location-dot mr-2 text-secondary"></i> Virar, Maharashtra, India</li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center text-gray-500 text-sm mt-12 border-t border-gray-800 pt-6">
-            &copy; 2026 Lipru Healthcare. All rights reserved.
         </div>
     </footer>
 
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Mobile Menu Toggle Mechanism
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Close mobile drawer if navigating through internal anchor links
+        const navLinks = mobileMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // 2. Accordion Logic
+        const accHeaders = document.querySelectorAll('.accordion-header');
+        accHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Toggle active items
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = '0px';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Reset all accordions first (Close other active blocks)
+                    document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = '0px');
+                    document.querySelectorAll('.accordion-header i').forEach(ic => ic.style.transform = 'rotate(0deg)');
+                    
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // 3. Prevent Past Dates selection in date picker
+        const dateInput = document.getElementById('preferred_date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    </script>
 </body>
 </html>
